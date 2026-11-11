@@ -137,6 +137,8 @@ export default function DetailedPhotographySection() {
                 <img
                   src={photo.imageUrl}
                   alt={photo.title}
+                  loading="lazy"
+                  decoding="async"
                   className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700 ease-out cursor-zoom-in"
                 />
 

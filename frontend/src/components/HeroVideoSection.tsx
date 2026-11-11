@@ -24,6 +24,7 @@ export default function HeroVideoSection() {
         loop
         muted
         playsInline
+        preload="metadata"
         poster="/videos/hero-poster.jpg"
         onLoadedData={() => setVideoLoaded(true)}
         className="absolute inset-0 w-full h-full object-cover object-center transition-opacity duration-1000"

@@ -133,6 +133,8 @@ function CollectionProductCard({ product, isMobileLayout = false }: ProductCardP
           <img
             src={product.images[imageIdx]}
             alt={product.title}
+            loading="lazy"
+            decoding="async"
             className="w-full h-full object-cover object-center transition-transform duration-700 ease-out group-hover:scale-105"
           />
         </Link>

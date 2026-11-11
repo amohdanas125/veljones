@@ -72,16 +72,27 @@ function CoverflowReelCard({
             : 'border-white/10 shadow-[0_15px_40px_rgba(0,0,0,0.75)]'
         }`}
       >
-        <video
-          ref={videoRef}
-          src={reel.videoUrl}
-          poster={reel.thumbnailUrl}
-          muted
-          loop
-          playsInline
-          preload="metadata"
-          className="w-full h-full object-cover object-center select-none pointer-events-none"
-        />
+        {isCenter ? (
+          <video
+            ref={videoRef}
+            src={reel.videoUrl}
+            poster={reel.thumbnailUrl}
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="metadata"
+            className="w-full h-full object-cover object-center select-none pointer-events-none"
+          />
+        ) : (
+          <img
+            src={reel.thumbnailUrl}
+            alt={reel.title}
+            loading="lazy"
+            decoding="async"
+            className="w-full h-full object-cover object-center select-none pointer-events-none"
+          />
+        )}
 
         {/* Subtle Scrim for Depth */}
         <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-black/15 pointer-events-none" />

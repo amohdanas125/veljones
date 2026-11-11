@@ -27,6 +27,8 @@ export default function LifestyleCampaignSection() {
             <img
               src="/images/products/valjons-drop001-lifestyle-fit.jpg"
               alt="VALJONS Drop 001 Lifestyle Campaign - Straight Fit in Motion"
+              loading="lazy"
+              decoding="async"
               className="w-full h-full object-cover object-center group-hover:scale-104 transition-transform duration-1000 ease-out"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent pointer-events-none" />
@@ -60,6 +62,8 @@ export default function LifestyleCampaignSection() {
               <img
                 src="/images/products/valjons-drop001-straight-fit-polo.jpg"
                 alt="VALJONS Drop 001 - Heather Melange Contour"
+                loading="lazy"
+                decoding="async"
                 className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700 ease-out"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-transparent to-transparent pointer-events-none" />
@@ -79,6 +83,8 @@ export default function LifestyleCampaignSection() {
               <img
                 src="/images/products/valjons-drop001-orange-streetwear.jpg"
                 alt="VALJONS Drop 001 - Terracotta & Botanical Undertones"
+                loading="lazy"
+                decoding="async"
                 className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700 ease-out"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-transparent to-transparent pointer-events-none" />
