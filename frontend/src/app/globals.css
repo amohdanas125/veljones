@@ -1,0 +1,65 @@
+@import "tailwindcss";
+
+@theme {
+  --font-poppins: var(--font-poppins), sans-serif;
+  --font-montserrat: var(--font-montserrat), sans-serif;
+}
+
+:root {
+  --background: #ffffff;
+  --foreground: #0a0a0a;
+}
+
+html {
+  overflow-x: hidden;
+  width: 100%;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-montserrat), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  overflow-x: hidden;
+  width: 100%;
+  position: relative;
+  -webkit-overflow-scrolling: touch;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-poppins), sans-serif;
+}
+
+/* Hide scrollbars for clean fashion carousels */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Safe touch target minimum */
+.touch-target {
+  min-height: 44px;
+  min-width: 44px;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.98); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-slide-up {
+  animation: slideUp 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}

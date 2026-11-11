@@ -1,0 +1,40 @@
+# Dependencies
+node_modules/
+*/node_modules/
+.pnp
+.pnp.*
+
+# Build and production outputs
+.next/
+*/.next/
+dist/
+*/dist/
+out/
+build/
+
+# Environment files
+.env
+.env.*
+!.env.example
+*.env.local
+
+# Logs and debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Testing & Coverage
+coverage/
+.playwright-cli/
+playwright-report/
+test-results/
+
+# Scratch & temporary verification files
+scratch/
+.system_generated/
+*.tsbuildinfo
+
+# OS generated files
+.DS_Store
+Thumbs.db
