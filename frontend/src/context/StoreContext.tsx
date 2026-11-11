@@ -163,26 +163,26 @@ export function StoreProvider({ children }: { children: ReactNode }) {
   };
 
   const toggleWishlist = async (productId: number) => {
+    // 1. Instant optimistic state update (0ms immediate feedback)
+    const willBeInWishlist = !wishlistIds.has(productId);
+    setWishlistIds(prev => {
+      const next = new Set(prev);
+      if (willBeInWishlist) {
+        next.add(productId);
+        addToast('Saved to wishlist');
+      } else {
+        next.delete(productId);
+        addToast('Removed from wishlist', 'info');
+      }
+      return next;
+    });
+
     try {
       const res = await api.toggleWishlist(sessionId, productId);
-      setWishlistIds(prev => {
-        const next = new Set(prev);
-        if (res.inWishlist) {
-          next.add(productId);
-          addToast('Saved to wishlist');
-        } else {
-          next.delete(productId);
-          addToast('Removed from wishlist', 'info');
-        }
-        return next;
-      });
-
-      // Refresh products in wishlist
-      api.getWishlist(sessionId).then(w => {
-        setWishlistProducts(w.items || []);
-      });
+      const w = await api.getWishlist(sessionId);
+      setWishlistProducts(w.items || []);
     } catch (e: any) {
-      console.error(e);
+      console.warn('Wishlist sync fallback:', e);
     }
   };
 

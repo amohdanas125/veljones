@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Menu, Search, ShoppingBag, Heart, User } from 'lucide-react';
+import { Menu, ShoppingBag, Heart, User } from 'lucide-react';
 import { useStore } from '@/context/StoreContext';
 import ValjonsLogo from './ValjonsLogo';
 
@@ -102,17 +102,6 @@ export default function Header() {
             >
               <User className="w-4 h-4 sm:w-5 sm:h-5 stroke-[1.8]" />
             </Link>
-
-            {/* Search */}
-            <button
-              onClick={openSearch}
-              aria-label="Search catalog"
-              className={`p-2 rounded-lg transition-colors cursor-pointer flex items-center justify-center ${
-                isTransparent ? 'text-white hover:bg-white/10' : 'text-black hover:bg-neutral-100'
-              }`}
-            >
-              <Search className="w-4 h-4 sm:w-5 sm:h-5 stroke-[1.8]" />
-            </button>
 
             {/* Wishlist Heart */}
             <button

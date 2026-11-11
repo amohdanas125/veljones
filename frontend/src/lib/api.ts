@@ -319,20 +319,24 @@ export const api = {
     return saveLocalCart([]);
   },
 
-  // Wishlist (Client-accelerated)
+  // Wishlist (Client-accelerated with instant local-first persistence)
   async getWishlist(
     sessionId: string,
   ): Promise<{ items: Product[]; count: number; productIds: number[] }> {
+    const ids = getLocalWishlist();
+    const items = INITIAL_PRODUCTS.filter((p) => ids.includes(p.id));
+
     if (API_BASE) {
       try {
-        return await fetchJson<{ items: Product[]; count: number; productIds: number[] }>(
+        const remote = await fetchJson<{ items: Product[]; count: number; productIds: number[] }>(
           `${API_BASE}/wishlist?sessionId=${encodeURIComponent(sessionId)}`,
         );
+        if (remote && Array.isArray(remote.items)) {
+          return remote;
+        }
       } catch {}
     }
 
-    const ids = getLocalWishlist();
-    const items = INITIAL_PRODUCTS.filter((p) => ids.includes(p.id));
     return { items, count: items.length, productIds: ids };
   },
 
@@ -340,18 +344,6 @@ export const api = {
     sessionId: string,
     productId: number,
   ): Promise<{ inWishlist: boolean; productId: number }> {
-    if (API_BASE) {
-      try {
-        return await fetchJson<{ inWishlist: boolean; productId: number }>(
-          `${API_BASE}/wishlist/toggle`,
-          {
-            method: 'POST',
-            body: JSON.stringify({ sessionId, productId }),
-          },
-        );
-      } catch {}
-    }
-
     const ids = getLocalWishlist();
     let nextIds: number[];
     let inWishlist: boolean;
@@ -365,6 +357,15 @@ export const api = {
     }
 
     saveLocalWishlist(nextIds);
+
+    // Sync with remote backend in background without blocking UI
+    if (API_BASE) {
+      fetchJson<{ inWishlist: boolean; productId: number }>(`${API_BASE}/wishlist/toggle`, {
+        method: 'POST',
+        body: JSON.stringify({ sessionId, productId }),
+      }).catch(() => {});
+    }
+
     return { inWishlist, productId };
   },
 

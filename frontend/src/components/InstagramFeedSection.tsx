@@ -17,8 +17,8 @@ interface CoverflowReelCardProps {
   onClick: () => void;
 }
 
-// Sub-component: Ensures ONLY the single front/center video plays, all other videos pause immediately
-function CoverflowReelCard({
+// Sub-component: Ensures ONLY the single front/center video plays, memoized for buttery 60/120 FPS
+const CoverflowReelCard = React.memo(function CoverflowReelCard({
   reel,
   isCenter,
   translateX,
@@ -36,10 +36,8 @@ function CoverflowReelCard({
     if (!video) return;
 
     if (isCenter) {
-      // ONLY the front video is played
       video.play().catch(() => {});
     } else {
-      // All other background/side videos are paused
       video.pause();
     }
   }, [isCenter]);
@@ -55,16 +53,15 @@ function CoverflowReelCard({
         transform: `translate3d(${totalX}px, 0, 0) scale(${scale})`,
         zIndex,
         opacity,
-        filter: `brightness(${brightness})`,
         transition:
           dragOffset !== 0
             ? 'none'
-            : 'transform 600ms cubic-bezier(0.16, 1, 0.3, 1), opacity 600ms cubic-bezier(0.16, 1, 0.3, 1), filter 600ms cubic-bezier(0.16, 1, 0.3, 1)',
+            : 'transform 500ms cubic-bezier(0.16, 1, 0.3, 1), opacity 500ms cubic-bezier(0.16, 1, 0.3, 1)',
         WebkitBackfaceVisibility: 'hidden',
         backfaceVisibility: 'hidden',
       }}
     >
-      {/* Card Container - Significantly enlarged to match reference screenshot */}
+      {/* Card Container - Enlarged to match reference screenshot */}
       <div
         className={`relative w-[270px] sm:w-[315px] md:w-[350px] lg:w-[380px] aspect-[9/16] rounded-[26px] sm:rounded-[34px] overflow-hidden bg-neutral-900 border transition-all duration-300 ${
           isCenter
@@ -94,12 +91,18 @@ function CoverflowReelCard({
           />
         )}
 
+        {/* High performance hardware-accelerated dark scrim (eliminates GPU shader filter lag) */}
+        <div
+          className="absolute inset-0 bg-black pointer-events-none transition-opacity duration-300"
+          style={{ opacity: 1 - brightness }}
+        />
+
         {/* Subtle Scrim for Depth */}
         <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-black/15 pointer-events-none" />
       </div>
     </div>
   );
-}
+});
 
 export default function InstagramFeedSection() {
   const { openVideoReel } = useStore();
@@ -112,6 +115,7 @@ export default function InstagramFeedSection() {
   const touchStartRef = useRef<{ x: number; y: number; time: number }>({ x: 0, y: 0, time: 0 });
   const isSwipingHorizontalRef = useRef<boolean | null>(null);
   const isDraggingRef = useRef<boolean>(false);
+  const rafIdRef = useRef<number | null>(null);
 
   // 8 Curated Reels directly matching reference layout (04 / 08 counter)
   const instaReels: Reel[] = [
@@ -245,12 +249,16 @@ export default function InstagramFeedSection() {
     }
 
     if (isSwipingHorizontalRef.current) {
-      // Smooth elastic drag resistance
-      setDragOffset(deltaX * 0.72);
+      // Throttle with requestAnimationFrame for 60/120 FPS buttery smoothness
+      if (rafIdRef.current) cancelAnimationFrame(rafIdRef.current);
+      rafIdRef.current = requestAnimationFrame(() => {
+        setDragOffset(deltaX * 0.72);
+      });
     }
   };
 
   const handleTouchEnd = (e: React.TouchEvent) => {
+    if (rafIdRef.current) cancelAnimationFrame(rafIdRef.current);
     if (!isDraggingRef.current) return;
     isDraggingRef.current = false;
 
@@ -286,10 +294,14 @@ export default function InstagramFeedSection() {
   const handleMouseMove = (e: React.MouseEvent) => {
     if (!isDraggingRef.current) return;
     const deltaX = e.clientX - touchStartRef.current.x;
-    setDragOffset(deltaX * 0.65);
+    if (rafIdRef.current) cancelAnimationFrame(rafIdRef.current);
+    rafIdRef.current = requestAnimationFrame(() => {
+      setDragOffset(deltaX * 0.65);
+    });
   };
 
   const handleMouseUp = (e: React.MouseEvent) => {
+    if (rafIdRef.current) cancelAnimationFrame(rafIdRef.current);
     if (!isDraggingRef.current) return;
     isDraggingRef.current = false;
     const deltaX = e.clientX - touchStartRef.current.x;

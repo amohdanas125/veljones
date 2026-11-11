@@ -270,7 +270,7 @@ export default function ShopCollectionSection() {
             Horizontal swipe carousel exactly matching user reference 123624.png
             Card 1 is wide & fully visible; Card 2 peeks from right edge with gap; ADD TO CART button visible */}
         <div
-          className="flex md:hidden overflow-x-auto snap-x snap-mandatory gap-3 pb-4 px-1 -mx-4 px-4 touch-pan-x [&::-webkit-scrollbar]:hidden"
+          className="flex md:hidden overflow-x-auto snap-x snap-mandatory gap-3 pb-4 px-4 -mx-4 [&::-webkit-scrollbar]:hidden"
           style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
         >
           {COLLECTION_PRODUCTS.map((product) => (
