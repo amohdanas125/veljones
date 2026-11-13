@@ -262,24 +262,22 @@ export function StoreProvider({ children }: { children: ReactNode }) {
       const accountsRaw = localStorage.getItem('valjons_registered_users_v1');
       const accounts = accountsRaw ? JSON.parse(accountsRaw) : {};
 
-      let account = accounts[cleanEmail];
-      let isNew = false;
+      const account = accounts[cleanEmail];
       if (!account) {
-        // Create active atelier profile on-the-fly without fake dummy phone
-        isNew = true;
-        const defaultName = cleanEmail.split('@')[0];
-        const formattedName = defaultName.charAt(0).toUpperCase() + defaultName.slice(1);
-        const newAccount: UserAccount = {
-          fullName: formattedName,
-          email: cleanEmail,
-          phone: '',
-          joinedDate: new Date().toLocaleDateString('en-US', { month: 'short', year: 'numeric' }),
-          tier: 'Atelier Member',
-          isLoggedIn: true,
+        // Enforce registration first: do not create account on sign-in
+        return {
+          success: false,
+          notRegistered: true,
+          message: 'Account not found with this email. Please register first to create your Atelier Account.',
         };
-        accounts[cleanEmail] = { ...newAccount, password: password || '' };
-        localStorage.setItem('valjons_registered_users_v1', JSON.stringify(accounts));
-        account = newAccount;
+      }
+
+      // If user has a password stored, verify it
+      if (account.password && password && account.password !== password) {
+        return {
+          success: false,
+          message: 'Incorrect password. Please check your password and try again.',
+        };
       }
 
       const activeUser: UserAccount = {
@@ -294,7 +292,7 @@ export function StoreProvider({ children }: { children: ReactNode }) {
       localStorage.setItem('valjons_current_user_v1', JSON.stringify(activeUser));
       setUser(activeUser);
       addToast(`Welcome back, ${activeUser.fullName.split(' ')[0]}!`);
-      return { success: true, isNew };
+      return { success: true };
     } catch (e: any) {
       console.error('Login failed:', e);
       addToast('Login error, please try again', 'error');

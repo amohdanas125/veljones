@@ -443,8 +443,20 @@ export default function LoginPage() {
           </div>
 
           {errorMsg && (
-            <div className="p-3 bg-red-50 border border-red-200 text-red-700 text-xs rounded-lg font-medium">
-              {errorMsg}
+            <div className="p-3.5 bg-red-50 border border-red-200 text-red-700 text-xs rounded-lg font-medium space-y-2">
+              <div>{errorMsg}</div>
+              {isLogin && errorMsg.includes('Account not found') && (
+                <button
+                  type="button"
+                  onClick={() => {
+                    setIsLogin(false);
+                    setErrorMsg('');
+                  }}
+                  className="w-full py-2 bg-black hover:bg-neutral-800 text-white text-[10px] font-bold uppercase tracking-wider rounded transition-colors cursor-pointer"
+                >
+                  Register Now with Mobile Number →
+                </button>
+              )}
             </div>
           )}
 
@@ -480,8 +492,9 @@ export default function LoginPage() {
           <button
             type="button"
             onClick={() => {
-              loginUser('guest.member@valjons.com');
-              addToast('Signed in with Google');
+              setIsLogin(false);
+              setEmail('amohdanas125@gmail.com');
+              setErrorMsg('Please complete your registration with your full name and 10-digit mobile number.');
             }}
             className="w-full py-3 border border-neutral-300 bg-white hover:bg-neutral-50 text-xs font-bold text-neutral-800 uppercase tracking-wider flex items-center justify-center gap-2.5 rounded-lg transition-colors cursor-pointer"
           >
