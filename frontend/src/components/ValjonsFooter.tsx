@@ -121,11 +121,6 @@ export default function ValjonsFooter() {
               </li>
               <li>
                 <Link href="/about" className="hover:text-black transition-colors block">
-                  ABOUT US
-                </Link>
-              </li>
-              <li>
-                <Link href="/about" className="hover:text-black transition-colors block">
                   OUR STORY
                 </Link>
               </li>
@@ -146,11 +141,6 @@ export default function ValjonsFooter() {
               <li>
                 <Link href="/contact" className="hover:text-black transition-colors block">
                   CUSTOMER CARE
-                </Link>
-              </li>
-              <li>
-                <Link href="/contact" className="hover:text-black transition-colors block">
-                  CONTACT
                 </Link>
               </li>
               <li>

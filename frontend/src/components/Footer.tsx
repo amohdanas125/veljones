@@ -97,11 +97,6 @@ export default function Footer() {
                 </li>
                 <li>
                   <Link href="/about" className="hover:text-black transition-colors">
-                    About Us
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/about" className="hover:text-black transition-colors">
                     Our Story
                   </Link>
                 </li>
@@ -115,13 +110,8 @@ export default function Footer() {
               </h4>
               <ul className="space-y-2 text-xs font-semibold tracking-wider uppercase text-neutral-600">
                 <li>
-                  <Link href="/customer-care" className="hover:text-black transition-colors">
-                    Customer Care
-                  </Link>
-                </li>
-                <li>
                   <Link href="/contact" className="hover:text-black transition-colors">
-                    Contact
+                    Customer Care
                   </Link>
                 </li>
                 <li>
