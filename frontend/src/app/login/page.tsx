@@ -3,13 +3,26 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { Mail, Lock, ArrowRight, ShieldCheck, Eye, EyeOff, User } from 'lucide-react';
+import {
+  Mail,
+  Lock,
+  ArrowRight,
+  ShieldCheck,
+  Eye,
+  EyeOff,
+  User,
+  LogOut,
+  Sparkles,
+  ShoppingBag,
+  Heart,
+  Compass,
+} from 'lucide-react';
 import ValjonsLogo from '@/components/ValjonsLogo';
 import { useStore } from '@/context/StoreContext';
 
 export default function LoginPage() {
   const router = useRouter();
-  const { addToast } = useStore();
+  const { user, loginUser, registerUser, logoutUser, addToast } = useStore();
   const [isLogin, setIsLogin] = useState(true);
   const [showPassword, setShowPassword] = useState(false);
 
@@ -19,24 +32,178 @@ export default function LoginPage() {
   const [fullName, setFullName] = useState('');
   const [phone, setPhone] = useState('');
   const [loading, setLoading] = useState(false);
+  const [errorMsg, setErrorMsg] = useState('');
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    setLoading(true);
+    setErrorMsg('');
 
-    setTimeout(() => {
-      setLoading(false);
-      if (isLogin) {
-        addToast(`Welcome back to VALJONS Atelier!`);
-      } else {
-        addToast(`Account created successfully! Welcome to VALJONS.`);
+    if (isLogin) {
+      if (!email.trim() || !email.includes('@')) {
+        setErrorMsg('Please enter a valid email address.');
+        return;
       }
-      router.push('/');
-    }, 600);
+      setLoading(true);
+      setTimeout(() => {
+        const res = loginUser(email, password);
+        setLoading(false);
+        if (!res.success) {
+          setErrorMsg(res.message || 'Unable to sign in. Please try again.');
+        }
+      }, 400);
+    } else {
+      if (fullName.trim().length < 2) {
+        setErrorMsg('Please enter your full name (minimum 2 characters).');
+        return;
+      }
+      if (phone.length !== 10) {
+        setErrorMsg('Please enter a valid 10-digit Indian mobile number.');
+        return;
+      }
+      if (!email.includes('@') || !email.includes('.')) {
+        setErrorMsg('Please enter a valid email address.');
+        return;
+      }
+      if (password.length < 6) {
+        setErrorMsg('Password must be at least 6 characters.');
+        return;
+      }
+
+      setLoading(true);
+      setTimeout(() => {
+        const res = registerUser({ fullName, phone, email, password });
+        setLoading(false);
+        if (!res.success) {
+          setErrorMsg(res.message || 'Registration failed. Please try again.');
+        }
+      }, 400);
+    }
   };
 
+  // If user is logged in, show Atelier Member Dashboard
+  if (user) {
+    return (
+      <div className="w-full min-h-screen bg-[#F6F5F2] font-montserrat flex items-center justify-center px-4 py-28 selection:bg-black selection:text-white">
+        <div className="w-full max-w-lg bg-white rounded-2xl shadow-xl border border-neutral-200 overflow-hidden">
+          {/* Header */}
+          <div className="bg-[#EAE6E2] py-8 px-6 text-center border-b border-neutral-300/80">
+            <div className="flex justify-center mb-2">
+              <ValjonsLogo theme="light" size="lg" />
+            </div>
+            <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-neutral-600 font-montserrat">
+              ATELIER MEMBER PORTAL
+            </p>
+          </div>
+
+          <div className="p-6 sm:p-8 space-y-6">
+            {/* User Profile Card */}
+            <div className="p-5 bg-neutral-50 rounded-xl border border-neutral-200/80 space-y-3">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <div className="w-12 h-12 rounded-full bg-black text-white flex items-center justify-center font-poppins font-black text-lg">
+                    {user.fullName.charAt(0).toUpperCase()}
+                  </div>
+                  <div>
+                    <h2 className="font-poppins font-black text-base uppercase text-black">
+                      {user.fullName}
+                    </h2>
+                    <p className="text-xs text-neutral-500 font-montserrat lowercase">
+                      {user.email}
+                    </p>
+                  </div>
+                </div>
+                <span className="px-2.5 py-1 bg-[#801414] text-white text-[10px] font-bold uppercase tracking-wider rounded-md">
+                  {user.tier}
+                </span>
+              </div>
+
+              <div className="grid grid-cols-2 gap-3 pt-3 border-t border-neutral-200 text-xs text-neutral-600">
+                <div>
+                  <span className="text-[10px] font-bold uppercase text-neutral-400 block tracking-wider">
+                    Mobile
+                  </span>
+                  <span className="font-semibold text-black">+91 {user.phone || '9876543210'}</span>
+                </div>
+                <div>
+                  <span className="text-[10px] font-bold uppercase text-neutral-400 block tracking-wider">
+                    Member Since
+                  </span>
+                  <span className="font-semibold text-black">{user.joinedDate}</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Exclusive Atelier Benefits */}
+            <div className="space-y-2.5">
+              <span className="text-[10px] font-bold uppercase tracking-wider text-neutral-400 block">
+                Privileges Active
+              </span>
+              <div className="p-3.5 bg-emerald-50/80 border border-emerald-200 rounded-lg flex items-center gap-2.5 text-xs text-emerald-800 font-medium">
+                <Sparkles className="w-4 h-4 text-emerald-700 shrink-0" />
+                <span>Drop 001 Priority Checkout & Free Express Courier Active</span>
+              </div>
+            </div>
+
+            {/* Member Quick Links */}
+            <div className="space-y-2 pt-2">
+              <span className="text-[10px] font-bold uppercase tracking-wider text-neutral-400 block">
+                Quick Navigation
+              </span>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                <Link
+                  href="/#shop-collection"
+                  className="p-3 border border-neutral-200 hover:border-black rounded-lg text-xs font-bold uppercase tracking-wider text-black flex items-center justify-between group transition-colors"
+                >
+                  <span className="flex items-center gap-2">
+                    <ShoppingBag className="w-4 h-4 text-neutral-500 group-hover:text-black" />
+                    Drop 001 Shop
+                  </span>
+                  <ArrowRight className="w-3.5 h-3.5 text-neutral-400 group-hover:text-black" />
+                </Link>
+
+                <Link
+                  href="/wishlist"
+                  className="p-3 border border-neutral-200 hover:border-black rounded-lg text-xs font-bold uppercase tracking-wider text-black flex items-center justify-between group transition-colors"
+                >
+                  <span className="flex items-center gap-2">
+                    <Heart className="w-4 h-4 text-neutral-500 group-hover:text-black" />
+                    My Wishlist
+                  </span>
+                  <ArrowRight className="w-3.5 h-3.5 text-neutral-400 group-hover:text-black" />
+                </Link>
+
+                <Link
+                  href="/why-valjons"
+                  className="p-3 border border-neutral-200 hover:border-black rounded-lg text-xs font-bold uppercase tracking-wider text-black flex items-center justify-between group transition-colors sm:col-span-2"
+                >
+                  <span className="flex items-center gap-2">
+                    <Compass className="w-4 h-4 text-neutral-500 group-hover:text-black" />
+                    Why VALJONS · 4 Pillars
+                  </span>
+                  <ArrowRight className="w-3.5 h-3.5 text-neutral-400 group-hover:text-black" />
+                </Link>
+              </div>
+            </div>
+
+            {/* Logout CTA */}
+            <div className="pt-4 border-t border-neutral-200">
+              <button
+                onClick={logoutUser}
+                className="w-full py-3.5 border border-neutral-300 hover:border-red-600 hover:bg-red-50 text-neutral-700 hover:text-red-700 text-xs font-bold uppercase tracking-wider rounded-lg transition-colors flex items-center justify-center gap-2 cursor-pointer"
+              >
+                <LogOut className="w-4 h-4" />
+                <span>Sign Out of Atelier</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // If not logged in, show Form with Tabs
   return (
-    <div className="w-full min-h-screen bg-[#F6F5F2] font-montserrat flex items-center justify-center px-4 py-28">
+    <div className="w-full min-h-screen bg-[#F6F5F2] font-montserrat flex items-center justify-center px-4 py-28 selection:bg-black selection:text-white">
       <div className="w-full max-w-md bg-white rounded-2xl shadow-xl border border-neutral-200 overflow-hidden">
         {/* Top Brand Banner */}
         <div className="bg-[#EAE6E2] py-8 px-6 text-center border-b border-neutral-300/80">
@@ -51,7 +218,10 @@ export default function LoginPage() {
         {/* Tab Switcher: Sign In vs Create Account */}
         <div className="grid grid-cols-2 border-b border-neutral-200 text-xs font-bold uppercase tracking-wider font-poppins">
           <button
-            onClick={() => setIsLogin(true)}
+            onClick={() => {
+              setIsLogin(true);
+              setErrorMsg('');
+            }}
             className={`py-4 text-center transition-colors cursor-pointer ${
               isLogin
                 ? 'text-black border-b-2 border-black bg-white'
@@ -61,7 +231,10 @@ export default function LoginPage() {
             SIGN IN
           </button>
           <button
-            onClick={() => setIsLogin(false)}
+            onClick={() => {
+              setIsLogin(false);
+              setErrorMsg('');
+            }}
             className={`py-4 text-center transition-colors cursor-pointer ${
               !isLogin
                 ? 'text-black border-b-2 border-black bg-white'
@@ -171,6 +344,12 @@ export default function LoginPage() {
             </div>
           </div>
 
+          {errorMsg && (
+            <div className="p-3 bg-red-50 border border-red-200 text-red-700 text-xs rounded-lg font-medium">
+              {errorMsg}
+            </div>
+          )}
+
           {/* Submit CTA Button */}
           <div className="pt-2">
             <button
@@ -203,8 +382,8 @@ export default function LoginPage() {
           <button
             type="button"
             onClick={() => {
-              addToast('Signed in via Google');
-              router.push('/');
+              loginUser('guest.member@valjons.com');
+              addToast('Signed in with Google');
             }}
             className="w-full py-3 border border-neutral-300 bg-white hover:bg-neutral-50 text-xs font-bold text-neutral-800 uppercase tracking-wider flex items-center justify-center gap-2.5 rounded-lg transition-colors cursor-pointer"
           >

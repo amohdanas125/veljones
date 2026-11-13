@@ -72,9 +72,6 @@ export default function ValjonsFooter() {
               <div className="text-[11px] font-black tracking-[0.25em] text-neutral-700 uppercase font-poppins pt-0.5">
                 VALJONS
               </div>
-              <div className="text-[10px] font-bold tracking-[0.18em] text-neutral-500 uppercase">
-                BY RESOURZBURG
-              </div>
             </div>
 
             {/* Social Icons matching Reference (Facebook Blue & Instagram Pink/Gradient) */}
@@ -117,6 +114,11 @@ export default function ValjonsFooter() {
               COMPANY
             </h4>
             <ul className="space-y-2 text-xs font-semibold text-neutral-700 uppercase tracking-wider">
+              <li>
+                <Link href="/why-valjons" className="hover:text-black transition-colors block">
+                  WHY VALJONS
+                </Link>
+              </li>
               <li>
                 <Link href="/about" className="hover:text-black transition-colors block">
                   ABOUT US

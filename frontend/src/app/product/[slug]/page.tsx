@@ -197,24 +197,85 @@ export default function ProductDetailPage() {
     setTimeout(() => {
       setIsCheckingPincode(false);
 
-      // Known city lookup by pincode prefix
-      let city = 'Your Location';
+      // Comprehensive Indian Postal Circle Dictionary
+      const PINCODE_CIRCLES: Record<string, string> = {
+        '11': 'New Delhi',
+        '12': 'Gurugram / Faridabad',
+        '13': 'Panipat / Haryana',
+        '14': 'Ludhiana / Punjab',
+        '15': 'Bathinda / Punjab',
+        '16': 'Chandigarh / Mohali',
+        '17': 'Shimla / Himachal Pradesh',
+        '18': 'Jammu / J&K',
+        '19': 'Srinagar / Kashmir',
+        '20': 'Noida / Ghaziabad / Western UP',
+        '21': 'Prayagraj / Southern UP',
+        '22': 'Lucknow / Central UP',
+        '23': 'Varanasi / Mirzapur / UP',
+        '24': 'Meerut / Bareilly / UP',
+        '25': 'Muzaffarnagar / Saharanpur / UP',
+        '26': 'Bareilly / Pilibhit / UP',
+        '27': 'Azamgarh / Mau / Eastern UP',
+        '28': 'Agra / Mathura / Jhansi / UP',
+        '30': 'Jaipur / Rajasthan',
+        '31': 'Udaipur / Rajasthan',
+        '32': 'Kota / Rajasthan',
+        '33': 'Bikaner / Rajasthan',
+        '34': 'Jodhpur / Rajasthan',
+        '36': 'Rajkot / Saurashtra / Gujarat',
+        '37': 'Kutch / Bhuj / Gujarat',
+        '38': 'Ahmedabad / Gandhinagar',
+        '39': 'Surat / Vadodara / Gujarat',
+        '40': 'Mumbai / Navi Mumbai / Thane',
+        '41': 'Pune / Western Maharashtra',
+        '42': 'Nashik / Dhule / Maharashtra',
+        '43': 'Aurangabad / Marathwada',
+        '44': 'Nagpur / Vidarbha',
+        '45': 'Indore / Western MP',
+        '46': 'Bhopal / Central MP',
+        '47': 'Gwalior / Northern MP',
+        '48': 'Jabalpur / Eastern MP',
+        '49': 'Raipur / Chhattisgarh',
+        '50': 'Hyderabad / Secunderabad',
+        '51': 'Tirupati / Rayalaseema',
+        '52': 'Vijayawada / Guntur / AP',
+        '53': 'Visakhapatnam / Coastal AP',
+        '56': 'Bengaluru Urban & Rural',
+        '57': 'Mangalore / Mysuru / Karnataka',
+        '58': 'Hubballi / North Karnataka',
+        '59': 'Belagavi / North Karnataka',
+        '60': 'Chennai / Kanchipuram',
+        '61': 'Thanjavur / Central TN',
+        '62': 'Madurai / South TN',
+        '63': 'Salem / Vellore / North TN',
+        '64': 'Coimbatore / Tiruppur / West TN',
+        '67': 'Kozhikode / Malabar / Kerala',
+        '68': 'Kochi / Ernakulam / Kerala',
+        '69': 'Thiruvananthapuram / Kerala',
+        '70': 'Kolkata / Howrah',
+        '71': 'Hooghly / Burdwan / WB',
+        '72': 'Kharagpur / Medinipur / WB',
+        '73': 'Siliguri / North Bengal',
+        '74': 'North 24 Parganas / WB',
+        '75': 'Bhubaneswar / Cuttack / Odisha',
+        '76': 'Berhampur / Odisha',
+        '77': 'Rourkela / Odisha',
+        '78': 'Guwahati / Assam',
+        '79': 'Shillong / North East',
+        '80': 'Patna / Central Bihar',
+        '81': 'Bhagalpur / Bihar',
+        '82': 'Gaya / South Bihar',
+        '83': 'Ranchi / Jamshedpur / Jharkhand',
+        '84': 'Muzaffarpur / North Bihar',
+        '85': 'Purnia / Katihar / Bihar',
+      };
+
       const prefix2 = cleanPin.substring(0, 2);
       const prefix3 = cleanPin.substring(0, 3);
-
-      if (prefix2 === '11') city = 'New Delhi';
-      else if (prefix2 === '12' || prefix2 === '13') city = 'Gurugram / Haryana';
-      else if (prefix2 === '20') city = 'Noida / Greater Noida';
-      else if (prefix2 === '40') city = 'Mumbai / Navi Mumbai';
-      else if (prefix2 === '41') city = 'Pune';
-      else if (prefix2 === '56') city = 'Bengaluru';
-      else if (prefix2 === '50') city = 'Hyderabad';
-      else if (prefix2 === '60') city = 'Chennai';
-      else if (prefix2 === '70') city = 'Kolkata';
-      else if (prefix2 === '38') city = 'Ahmedabad';
-      else if (prefix2 === '30') city = 'Jaipur';
-      else if (prefix2 === '68' || prefix2 === '69') city = 'Kochi / Kerala';
-      else if (prefix2 === '14' || prefix2 === '16') city = 'Chandigarh / Punjab';
+      let city = PINCODE_CIRCLES[prefix2] || 'Your Region';
+      if (prefix3 === '403') {
+        city = 'Panaji / Goa';
+      }
 
       const isMetro = ['11', '40', '56', '50', '60', '70', '41', '38'].includes(prefix2);
       const deliveryDate = new Date();

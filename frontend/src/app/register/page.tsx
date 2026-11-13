@@ -9,22 +9,46 @@ import { useStore } from '@/context/StoreContext';
 
 export default function RegisterPage() {
   const router = useRouter();
-  const { addToast } = useStore();
+  const { registerUser, addToast, user } = useStore();
   const [showPassword, setShowPassword] = useState(false);
   const [fullName, setFullName] = useState('');
   const [phone, setPhone] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
+  const [errorMsg, setErrorMsg] = useState('');
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    setErrorMsg('');
+
+    if (fullName.trim().length < 2) {
+      setErrorMsg('Please enter your full name (minimum 2 characters).');
+      return;
+    }
+    if (phone.length !== 10) {
+      setErrorMsg('Please enter a valid 10-digit Indian mobile number.');
+      return;
+    }
+    if (!email.includes('@') || !email.includes('.')) {
+      setErrorMsg('Please enter a valid email address.');
+      return;
+    }
+    if (password.length < 6) {
+      setErrorMsg('Password must be at least 6 characters long.');
+      return;
+    }
+
     setLoading(true);
     setTimeout(() => {
+      const res = registerUser({ fullName, phone, email, password });
       setLoading(false);
-      addToast(`Account created successfully! Welcome to VALJONS.`);
-      router.push('/');
-    }, 600);
+      if (res.success) {
+        router.push('/login');
+      } else {
+        setErrorMsg(res.message || 'Could not register account. Please try again.');
+      }
+    }, 400);
   };
 
   return (
@@ -118,6 +142,12 @@ export default function RegisterPage() {
               </button>
             </div>
           </div>
+
+          {errorMsg && (
+            <div className="p-3 bg-red-50 border border-red-200 text-red-700 text-xs rounded-lg font-medium">
+              {errorMsg}
+            </div>
+          )}
 
           <div className="pt-2">
             <button

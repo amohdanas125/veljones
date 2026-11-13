@@ -33,7 +33,6 @@ export default function Footer() {
 
             <div className="space-y-0.5 text-xs font-bold uppercase tracking-wider text-neutral-900">
               <p>VALJONS</p>
-              <p className="text-neutral-500 font-medium">BY RESOURZBURG</p>
             </div>
 
             {/* Social Icons */}
@@ -91,6 +90,11 @@ export default function Footer() {
                 Company
               </h4>
               <ul className="space-y-2 text-xs font-semibold tracking-wider uppercase text-neutral-600">
+                <li>
+                  <Link href="/why-valjons" className="hover:text-black transition-colors">
+                    Why VALJONS
+                  </Link>
+                </li>
                 <li>
                   <Link href="/about" className="hover:text-black transition-colors">
                     About Us
@@ -156,7 +160,7 @@ export default function Footer() {
 
         {/* Bottom Subfooter */}
         <div className="pt-8 flex flex-col sm:flex-row items-center justify-between text-[11px] text-neutral-500 font-medium gap-4">
-          <p>© {new Date().getFullYear()} VALJONS BY RESOURZBURG. ALL RIGHTS RESERVED.</p>
+          <p>© {new Date().getFullYear()} VALJONS. ALL RIGHTS RESERVED.</p>
           <div className="flex gap-4 uppercase tracking-wider text-[10px]">
             <span>Crafted for modern streetwear purists</span>
             <span>•</span>

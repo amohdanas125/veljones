@@ -8,7 +8,7 @@ import { useStore } from '@/context/StoreContext';
 import ValjonsLogo from './ValjonsLogo';
 
 export default function Header() {
-  const { cart, wishlistProducts, openCart, openWishlist, openMenu, openSearch, openOurStory, openContact } = useStore();
+  const { user, cart, wishlistProducts, openCart, openWishlist, openMenu, openSearch, openOurStory, openContact } = useStore();
   const [isScrolled, setIsScrolled] = useState(false);
   const pathname = usePathname();
 
@@ -95,12 +95,21 @@ export default function Header() {
             {/* User Account */}
             <Link
               href="/login"
-              aria-label="Member Account"
-              className={`p-2 rounded-lg transition-colors cursor-pointer flex items-center justify-center ${
+              aria-label={user ? `Logged in as ${user.fullName}` : 'Member Account'}
+              className={`p-2 rounded-lg transition-colors cursor-pointer flex items-center justify-center relative ${
                 isTransparent ? 'text-white hover:bg-white/10' : 'text-black hover:bg-neutral-100'
               }`}
             >
-              <User className="w-4 h-4 sm:w-5 sm:h-5 stroke-[1.8]" />
+              {user ? (
+                <div className="w-5 h-5 rounded-full bg-black text-white text-[10px] font-bold flex items-center justify-center border border-white/60 shadow-xs">
+                  {user.fullName.charAt(0).toUpperCase()}
+                </div>
+              ) : (
+                <User className="w-4 h-4 sm:w-5 sm:h-5 stroke-[1.8]" />
+              )}
+              {user && (
+                <span className="absolute top-1.5 right-1.5 w-1.5 h-1.5 bg-emerald-500 rounded-full ring-1 ring-white" />
+              )}
             </Link>
 
             {/* Wishlist Heart */}

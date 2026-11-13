@@ -4,7 +4,6 @@ import ShopCollectionSection from '@/components/ShopCollectionSection';
 import ProductFeaturesSection from '@/components/ProductFeaturesSection';
 import DetailedPhotographySection from '@/components/DetailedPhotographySection';
 import LifestyleCampaignSection from '@/components/LifestyleCampaignSection';
-import WhyValjonsSection from '@/components/WhyValjonsSection';
 import CustomerReviewsSection from '@/components/CustomerReviewsSection';
 import InstagramFeedSection from '@/components/InstagramFeedSection';
 
@@ -28,10 +27,7 @@ export default function HomePage() {
       {/* 5. Lifestyle campaign */}
       <LifestyleCampaignSection />
 
-      {/* 6. Why VALJONS */}
-      <WhyValjonsSection />
-
-      {/* 7. Customer reviews */}
+      {/* 6. Customer reviews */}
       <CustomerReviewsSection />
 
       {/* 8. Instagram feed */}
