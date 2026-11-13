@@ -55,10 +55,7 @@ export default function WhyValjonsPage() {
 
       <div className="max-w-5xl mx-auto px-4 sm:px-8 pt-8 sm:pt-14 space-y-16">
         {/* Header Hero */}
-        <div className="space-y-4 text-center max-w-2xl mx-auto">
-          <div className="flex justify-center mb-2">
-            <ValjonsLogo theme="light" size="lg" />
-          </div>
+        <div className="space-y-3 text-center max-w-2xl mx-auto">
           <span className="text-xs font-bold uppercase tracking-[0.25em] text-[#801414] block">
             THE ATELIER STANDARD
           </span>
@@ -73,18 +70,60 @@ export default function WhyValjonsPage() {
         {/* Hero Banner Image */}
         <div className="relative aspect-[16/9] w-full rounded-2xl overflow-hidden shadow-lg border border-neutral-200">
           <img
-            src="/images/products/valjons-drop001-detailed-angles.jpg"
+            src="/images/products/valjons-drop001-lifestyle-fit.jpg"
             alt="VALJONS Architectural Garment Drafting"
             className="w-full h-full object-cover"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent flex items-end p-6 sm:p-10">
-            <div className="text-white space-y-1">
+          <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent flex items-end p-6 sm:p-10">
+            <div className="text-white space-y-1.5">
               <span className="text-[10px] sm:text-xs font-bold uppercase tracking-[0.22em] text-neutral-300">
                 Garment Architecture · Drop 001
               </span>
               <p className="font-poppins font-black text-lg sm:text-2xl uppercase tracking-wide">
                 Built different. Worn everywhere.
               </p>
+            </div>
+          </div>
+        </div>
+
+        {/* Studio Visual Showcase */}
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <div className="relative aspect-[4/3] rounded-xl overflow-hidden border border-neutral-200 group">
+            <img
+              src="/images/products/valjons-heavyweight-fleece.jpg"
+              alt="280 GSM Heavyweight Fleece"
+              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex items-end p-4">
+              <span className="text-white text-xs font-black uppercase tracking-wider font-poppins">
+                280 GSM Loopback Fleece
+              </span>
+            </div>
+          </div>
+
+          <div className="relative aspect-[4/3] rounded-xl overflow-hidden border border-neutral-200 group">
+            <img
+              src="/images/products/valjons-drop001-cargo-fleece.jpg"
+              alt="Architectural Seam Drafting"
+              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex items-end p-4">
+              <span className="text-white text-xs font-black uppercase tracking-wider font-poppins">
+                Precision Seam Drafting
+              </span>
+            </div>
+          </div>
+
+          <div className="relative aspect-[4/3] rounded-xl overflow-hidden border border-neutral-200 group">
+            <img
+              src="/images/products/valjons-drop001-denim-street.jpg"
+              alt="Effortless Streetwear Stacking"
+              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex items-end p-4">
+              <span className="text-white text-xs font-black uppercase tracking-wider font-poppins">
+                Natural Pooling Hem
+              </span>
             </div>
           </div>
         </div>

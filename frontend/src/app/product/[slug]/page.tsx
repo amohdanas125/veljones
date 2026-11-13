@@ -26,6 +26,7 @@ import { useStore } from '@/context/StoreContext';
 import { api } from '@/lib/api';
 import { Product } from '@/types';
 import CustomerReviewsSection from '@/components/CustomerReviewsSection';
+import GarmentMeasurementDiagram from '@/components/GarmentMeasurementDiagram';
 
 // Pre-configured rich colorways strictly using genuine client assets from the 'images' folder
 const COLORWAYS = [
@@ -124,6 +125,27 @@ export default function ProductDetailPage() {
   } | null>(null);
   const [isCheckingPincode, setIsCheckingPincode] = useState(false);
 
+  // Adaptive measurement chart state (auto-detected, user toggleable)
+  const isLowerInitial = Boolean(
+    slug.includes('pant') ||
+    slug.includes('sweatpant') ||
+    slug.includes('fleece') ||
+    slug.includes('cargo')
+  );
+  const [measurementType, setMeasurementType] = useState<'upper' | 'lower'>(isLowerInitial ? 'lower' : 'upper');
+
+  useEffect(() => {
+    if (product) {
+      const isLower = Boolean(
+        product.categorySlug === 'sweatpants' ||
+        product.title?.toLowerCase().includes('pant') ||
+        product.title?.toLowerCase().includes('cargo') ||
+        product.slug?.toLowerCase().includes('pant')
+      );
+      setMeasurementType(isLower ? 'lower' : 'upper');
+    }
+  }, [product]);
+
   useEffect(() => {
     setIsLoading(true);
     api.getProductBySlug(slug)
@@ -173,14 +195,24 @@ export default function ProductDetailPage() {
 
   const sizes = ['XS', 'S', 'M', 'L', 'XL', 'XXL'];
 
-  // Size chart measurement table
-  const sizeMeasurements = [
+  // Upper body measurement specifications (Inches)
+  const upperBodyMeasurements = [
     { size: 'XS', chest: '40', shoulder: '19', length: '26', sleeve: '9 1/2' },
     { size: 'S', chest: '42', shoulder: '20', length: '27', sleeve: '9 3/4' },
     { size: 'M', chest: '44', shoulder: '20 1/2', length: '28', sleeve: '10' },
     { size: 'L', chest: '46', shoulder: '21', length: '29', sleeve: '10 1/4' },
     { size: 'XL', chest: '48', shoulder: '21 1/2', length: '30', sleeve: '10 1/2' },
     { size: 'XXL', chest: '50', shoulder: '22', length: '31', sleeve: '10 3/4' },
+  ];
+
+  // Lower body measurement specifications (Inches)
+  const lowerBodyMeasurements = [
+    { size: 'XS', waist: '28 - 30', hip: '38', inseam: '29 1/2', length: '39 1/2', hem: '9' },
+    { size: 'S', waist: '30 - 32', hip: '40', inseam: '30', length: '40 1/2', hem: '9 1/2' },
+    { size: 'M', waist: '32 - 34', hip: '42', inseam: '30 1/2', length: '41 1/2', hem: '10' },
+    { size: 'L', waist: '34 - 36', hip: '44', inseam: '31', length: '42 1/2', hem: '10 1/2' },
+    { size: 'XL', waist: '36 - 38', hip: '46', inseam: '31 1/2', length: '43 1/2', hem: '11' },
+    { size: 'XXL', waist: '38 - 40', hip: '48', inseam: '32', length: '44 1/2', hem: '11 1/2' },
   ];
 
   // Smart Indian Pincode Resolver
@@ -612,75 +644,168 @@ export default function ProductDetailPage() {
             </div>
 
             {/* SIZE CHART section matching reference design */}
-            <div className="space-y-3 pt-3 border-t border-neutral-200">
-              <span className="text-xs font-black uppercase tracking-[0.18em] text-neutral-900 block font-poppins">
-                SIZE CHART & SPECIFICATIONS
-              </span>
+            <div className="space-y-3.5 pt-3 border-t border-neutral-200">
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-black uppercase tracking-[0.18em] text-neutral-900 block font-poppins">
+                  SIZE CHART & SPECIFICATIONS
+                </span>
+                <span className="text-[10px] text-neutral-500 font-bold uppercase tracking-wider">
+                  {measurementType === 'lower' ? 'Pants / Bottoms' : 'Tees / Tops'}
+                </span>
+              </div>
 
-              {/* T-Shirt vector illustration */}
-              <div className="flex justify-center p-3 bg-[#FAF9F7] rounded-lg border border-neutral-200">
-                <img
-                  src="/images/products/tshirt-measurement-guide.png"
-                  alt="Garment measurement guide"
-                  className="max-h-36 object-contain"
-                />
+              {/* Segmented Toggle: Lower Body vs Upper Body */}
+              <div className="grid grid-cols-2 p-1 bg-neutral-100 rounded-lg text-[10px] sm:text-xs font-bold uppercase tracking-wider font-poppins">
+                <button
+                  type="button"
+                  onClick={() => setMeasurementType('lower')}
+                  className={`py-2 px-2 text-center rounded-md transition-all cursor-pointer ${
+                    measurementType === 'lower'
+                      ? 'bg-black text-white shadow-xs'
+                      : 'text-neutral-500 hover:text-black'
+                  }`}
+                >
+                  Lower Body (Pants)
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setMeasurementType('upper')}
+                  className={`py-2 px-2 text-center rounded-md transition-all cursor-pointer ${
+                    measurementType === 'upper'
+                      ? 'bg-black text-white shadow-xs'
+                      : 'text-neutral-500 hover:text-black'
+                  }`}
+                >
+                  Upper Body (Tees / Tops)
+                </button>
+              </div>
+
+              {/* Vector Architectural Garment Diagram (Infinitely crisp SVG) */}
+              <div className="p-3 bg-[#FAF9F7] rounded-xl border border-neutral-200 shadow-2xs">
+                <GarmentMeasurementDiagram type={measurementType} />
               </div>
 
               {/* Measurement Table */}
               <div className="overflow-x-auto">
-                <div className="bg-[#801414] text-white text-[10px] font-bold uppercase tracking-[0.2em] py-1 px-3 text-center rounded-t-md">
-                  ALL MEASUREMENTS IN INCHES
+                <div className="bg-[#801414] text-white text-[10px] font-bold uppercase tracking-[0.2em] py-1.5 px-3 text-center rounded-t-md">
+                  ALL MEASUREMENTS IN INCHES · {measurementType === 'lower' ? 'SWEATPANTS & CARGO' : 'STREETWEAR TEES'}
                 </div>
 
-                <table className="w-full text-center border-collapse text-[10px] border border-neutral-200 rounded-b-md overflow-hidden">
-                  <thead>
-                    <tr className="bg-neutral-100/80 font-bold uppercase text-neutral-600 border-b border-neutral-200">
-                      <th className="py-2 px-1">BODY SIZE</th>
-                      <th className="py-2 px-1">CHEST</th>
-                      <th className="py-2 px-1">SHOULDER</th>
-                      <th className="py-2 px-1">LENGTH</th>
-                      <th className="py-2 px-1">SLEEVE</th>
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-neutral-100">
-                    {sizeMeasurements.map((m) => (
-                      <tr
-                        key={m.size}
-                        className={selectedSize === m.size ? 'bg-red-50/60 font-bold' : 'hover:bg-neutral-50'}
-                      >
-                        <td className="py-2 px-1 font-bold text-black">{m.size}</td>
-                        <td className="py-1 px-1">
-                          <span className="inline-block px-2 py-0.5 rounded-full border border-neutral-300 bg-white text-neutral-800">
-                            {m.chest}
-                          </span>
-                        </td>
-                        <td className="py-1 px-1">
-                          <span className="inline-block px-2 py-0.5 rounded-full border border-neutral-300 bg-white text-neutral-800">
-                            {m.shoulder}
-                          </span>
-                        </td>
-                        <td className="py-1 px-1">
-                          <span className="inline-block px-2 py-0.5 rounded-full border border-neutral-300 bg-white text-neutral-800">
-                            {m.length}
-                          </span>
-                        </td>
-                        <td className="py-1 px-1">
-                          <span className="inline-block px-2 py-0.5 rounded-full border border-neutral-300 bg-white text-neutral-800">
-                            {m.sleeve}
-                          </span>
-                        </td>
+                {measurementType === 'lower' ? (
+                  <table className="w-full text-center border-collapse text-[10px] border border-neutral-200 rounded-b-md overflow-hidden">
+                    <thead>
+                      <tr className="bg-neutral-100/80 font-bold uppercase text-neutral-600 border-b border-neutral-200">
+                        <th className="py-2 px-1">SIZE</th>
+                        <th className="py-2 px-1">WAIST</th>
+                        <th className="py-2 px-1">HIP</th>
+                        <th className="py-2 px-1">INSEAM</th>
+                        <th className="py-2 px-1">OUTSEAM</th>
+                        <th className="py-2 px-1">HEM</th>
                       </tr>
-                    ))}
-                  </tbody>
-                </table>
+                    </thead>
+                    <tbody className="divide-y divide-neutral-100">
+                      {lowerBodyMeasurements.map((m) => (
+                        <tr
+                          key={m.size}
+                          className={selectedSize === m.size ? 'bg-red-50/70 font-bold' : 'hover:bg-neutral-50'}
+                        >
+                          <td className="py-2 px-1 font-bold text-black">{m.size}</td>
+                          <td className="py-1 px-1">
+                            <span className="inline-block px-1.5 py-0.5 rounded-full border border-neutral-300 bg-white text-neutral-800">
+                              {m.waist}
+                            </span>
+                          </td>
+                          <td className="py-1 px-1">
+                            <span className="inline-block px-1.5 py-0.5 rounded-full border border-neutral-300 bg-white text-neutral-800">
+                              {m.hip}
+                            </span>
+                          </td>
+                          <td className="py-1 px-1">
+                            <span className="inline-block px-1.5 py-0.5 rounded-full border border-neutral-300 bg-white text-neutral-800">
+                              {m.inseam}
+                            </span>
+                          </td>
+                          <td className="py-1 px-1">
+                            <span className="inline-block px-1.5 py-0.5 rounded-full border border-neutral-300 bg-white text-neutral-800">
+                              {m.length}
+                            </span>
+                          </td>
+                          <td className="py-1 px-1">
+                            <span className="inline-block px-1.5 py-0.5 rounded-full border border-neutral-300 bg-white text-neutral-800">
+                              {m.hem}
+                            </span>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                ) : (
+                  <table className="w-full text-center border-collapse text-[10px] border border-neutral-200 rounded-b-md overflow-hidden">
+                    <thead>
+                      <tr className="bg-neutral-100/80 font-bold uppercase text-neutral-600 border-b border-neutral-200">
+                        <th className="py-2 px-1">SIZE</th>
+                        <th className="py-2 px-1">CHEST</th>
+                        <th className="py-2 px-1">SHOULDER</th>
+                        <th className="py-2 px-1">LENGTH</th>
+                        <th className="py-2 px-1">SLEEVE</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-neutral-100">
+                      {upperBodyMeasurements.map((m) => (
+                        <tr
+                          key={m.size}
+                          className={selectedSize === m.size ? 'bg-red-50/70 font-bold' : 'hover:bg-neutral-50'}
+                        >
+                          <td className="py-2 px-1 font-bold text-black">{m.size}</td>
+                          <td className="py-1 px-1">
+                            <span className="inline-block px-1.5 py-0.5 rounded-full border border-neutral-300 bg-white text-neutral-800">
+                              {m.chest}
+                            </span>
+                          </td>
+                          <td className="py-1 px-1">
+                            <span className="inline-block px-1.5 py-0.5 rounded-full border border-neutral-300 bg-white text-neutral-800">
+                              {m.shoulder}
+                            </span>
+                          </td>
+                          <td className="py-1 px-1">
+                            <span className="inline-block px-1.5 py-0.5 rounded-full border border-neutral-300 bg-white text-neutral-800">
+                              {m.length}
+                            </span>
+                          </td>
+                          <td className="py-1 px-1">
+                            <span className="inline-block px-1.5 py-0.5 rounded-full border border-neutral-300 bg-white text-neutral-800">
+                              {m.sleeve}
+                            </span>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                )}
               </div>
 
-              {/* HOW TO MEASURE? */}
-              <div className="p-3 bg-neutral-50 rounded-lg text-[10px] text-neutral-600 space-y-1 leading-relaxed border border-neutral-200/60">
-                <p className="font-bold uppercase tracking-wider text-black">HOW TO MEASURE?</p>
-                <p>All measurements are of the garment laid flat.</p>
-                <p><span className="font-bold text-neutral-800">CHEST</span> — Measure across the chest, 2cm below the armhole, seam to seam.</p>
-                <p><span className="font-bold text-neutral-800">LENGTH</span> — From the highest point of shoulder down to hem.</p>
+              {/* Contextual HOW TO MEASURE guide */}
+              <div className="p-3 bg-neutral-50 rounded-lg text-[10px] text-neutral-600 space-y-1.5 leading-relaxed border border-neutral-200/60">
+                <p className="font-bold uppercase tracking-wider text-black">
+                  HOW TO MEASURE ({measurementType === 'lower' ? 'PANTS / BOTTOMS' : 'TEES / TOPS'})?
+                </p>
+                <p className="text-neutral-500">All measurements are taken flat across relaxed garments.</p>
+                {measurementType === 'lower' ? (
+                  <>
+                    <p><span className="font-bold text-neutral-900">[A] WAIST</span> — Measure flat across elasticated waistband relaxed (double for circumference).</p>
+                    <p><span className="font-bold text-neutral-900">[B] HIP</span> — Across the widest part of the seat/hips.</p>
+                    <p><span className="font-bold text-neutral-900">[C] INSEAM</span> — Inner leg seam from crotch down to bottom hem pooling.</p>
+                    <p><span className="font-bold text-neutral-900">[D] OUTSEAM</span> — Total outer side seam from top of waistband to leg cuff.</p>
+                    <p><span className="font-bold text-neutral-900">[E] HEM</span> — Flat width of the bottom ankle opening.</p>
+                  </>
+                ) : (
+                  <>
+                    <p><span className="font-bold text-neutral-900">[A] CHEST</span> — Across the chest, 2cm below the armhole, pit to pit.</p>
+                    <p><span className="font-bold text-neutral-900">[B] LENGTH</span> — Highest point of shoulder down to bottom hem.</p>
+                    <p><span className="font-bold text-neutral-900">[C] SHOULDER</span> — Across the back, from shoulder seam to shoulder seam.</p>
+                    <p><span className="font-bold text-neutral-900">[D] SLEEVE</span> — From shoulder seam down to sleeve cuff opening.</p>
+                  </>
+                )}
               </div>
             </div>
 
