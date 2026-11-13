@@ -151,7 +151,7 @@ export default function ReelsSection({ reels = [] }: ReelsSectionProps) {
 
   return (
     <section
-      className="w-full py-14 sm:py-24 bg-black text-white overflow-hidden select-none border-t border-neutral-900 scroll-mt-20 font-montserrat"
+      className="relative isolate w-full py-14 sm:py-24 bg-black text-white overflow-hidden select-none border-t border-neutral-900 scroll-mt-20 font-montserrat"
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
     >
@@ -189,7 +189,7 @@ export default function ReelsSection({ reels = [] }: ReelsSectionProps) {
           <button
             onClick={handlePrev}
             aria-label="Previous reel"
-            className="hidden md:flex absolute left-4 lg:left-12 z-40 w-11 h-11 rounded-full bg-black/60 hover:bg-white hover:text-black text-white border border-white/25 backdrop-blur-md items-center justify-center transition-all cursor-pointer shadow-xl"
+            className="hidden md:flex absolute left-4 lg:left-12 z-30 w-11 h-11 rounded-full bg-black/60 hover:bg-white hover:text-black text-white border border-white/25 backdrop-blur-md items-center justify-center transition-all cursor-pointer shadow-xl"
           >
             <ChevronLeft className="w-5 h-5 stroke-[2]" />
           </button>
@@ -197,7 +197,7 @@ export default function ReelsSection({ reels = [] }: ReelsSectionProps) {
           <button
             onClick={handleNext}
             aria-label="Next reel"
-            className="hidden md:flex absolute right-4 lg:right-12 z-40 w-11 h-11 rounded-full bg-black/60 hover:bg-white hover:text-black text-white border border-white/25 backdrop-blur-md items-center justify-center transition-all cursor-pointer shadow-xl"
+            className="hidden md:flex absolute right-4 lg:right-12 z-30 w-11 h-11 rounded-full bg-black/60 hover:bg-white hover:text-black text-white border border-white/25 backdrop-blur-md items-center justify-center transition-all cursor-pointer shadow-xl"
           >
             <ChevronRight className="w-5 h-5 stroke-[2]" />
           </button>

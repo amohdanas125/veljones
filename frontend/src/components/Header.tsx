@@ -28,7 +28,7 @@ export default function Header() {
   }, []);
 
   return (
-    <header className="fixed top-0 inset-x-0 z-40 w-full transition-all duration-300">
+    <header className="fixed top-0 inset-x-0 z-50 w-full transition-all duration-300">
       {/* 1. Festive / Announcement Top Bar - Dark Crimson matching reference */}
       <div className="bg-[#7F1717] text-white text-[10px] sm:text-xs font-semibold uppercase tracking-[0.16em] sm:tracking-[0.22em] py-1.5 sm:py-2 px-3 text-center font-montserrat flex items-center justify-center select-none shadow-xs">
         <span className="truncate">FESTIVE SALE IS LIVE · UP TO 55% OFF</span>
