@@ -22,7 +22,7 @@ import { useStore } from '@/context/StoreContext';
 
 export default function LoginPage() {
   const router = useRouter();
-  const { user, loginUser, registerUser, logoutUser, addToast } = useStore();
+  const { user, loginUser, registerUser, updateUserProfile, logoutUser, addToast } = useStore();
   const [isLogin, setIsLogin] = useState(true);
   const [showPassword, setShowPassword] = useState(false);
 
@@ -33,6 +33,22 @@ export default function LoginPage() {
   const [phone, setPhone] = useState('');
   const [loading, setLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
+
+  // Dashboard phone edit state
+  const [isEditingPhone, setIsEditingPhone] = useState(false);
+  const [newPhone, setNewPhone] = useState('');
+  const [phoneError, setPhoneError] = useState('');
+
+  const handleSavePhone = (e?: React.FormEvent) => {
+    if (e) e.preventDefault();
+    if (newPhone.trim().length !== 10) {
+      setPhoneError('Please enter a valid 10-digit Indian mobile number.');
+      return;
+    }
+    updateUserProfile({ phone: newPhone.trim() });
+    setIsEditingPhone(false);
+    setPhoneError('');
+  };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -96,6 +112,24 @@ export default function LoginPage() {
           </div>
 
           <div className="p-6 sm:p-8 space-y-6">
+            {(!user.phone || user.phone === '9876543210') && (
+              <div className="p-3 bg-amber-50 border border-amber-200 rounded-xl flex items-center justify-between text-xs text-amber-900">
+                <span className="font-medium">
+                  Please link your 10-digit mobile number for order delivery & tracking updates.
+                </span>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setNewPhone('');
+                    setIsEditingPhone(true);
+                  }}
+                  className="px-2.5 py-1 bg-amber-900 text-white font-bold uppercase text-[10px] rounded shrink-0 ml-3 hover:bg-black transition-colors cursor-pointer"
+                >
+                  Add Mobile
+                </button>
+              </div>
+            )}
+
             {/* User Profile Card */}
             <div className="p-5 bg-neutral-50 rounded-xl border border-neutral-200/80 space-y-3">
               <div className="flex items-center justify-between">
@@ -117,18 +151,82 @@ export default function LoginPage() {
                 </span>
               </div>
 
-              <div className="grid grid-cols-2 gap-3 pt-3 border-t border-neutral-200 text-xs text-neutral-600">
-                <div>
-                  <span className="text-[10px] font-bold uppercase text-neutral-400 block tracking-wider">
-                    Mobile
-                  </span>
-                  <span className="font-semibold text-black">+91 {user.phone || '9876543210'}</span>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-3 border-t border-neutral-200 text-xs text-neutral-600">
+                <div className="space-y-1">
+                  <div className="flex items-center justify-between">
+                    <span className="text-[10px] font-bold uppercase text-neutral-400 block tracking-wider">
+                      Mobile Number
+                    </span>
+                    {!isEditingPhone && (
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setNewPhone(user.phone && user.phone !== '9876543210' ? user.phone : '');
+                          setIsEditingPhone(true);
+                          setPhoneError('');
+                        }}
+                        className="text-[10px] font-bold uppercase text-[#801414] hover:underline cursor-pointer"
+                      >
+                        {user.phone && user.phone !== '9876543210' ? 'Edit' : '+ Add Number'}
+                      </button>
+                    )}
+                  </div>
+
+                  {isEditingPhone ? (
+                    <div className="space-y-1 pt-1">
+                      <div className="flex items-center gap-1">
+                        <span className="text-[11px] font-bold text-neutral-600 bg-neutral-200 px-2 py-1.5 rounded-l border border-r-0 border-neutral-300">
+                          +91
+                        </span>
+                        <input
+                          type="tel"
+                          maxLength={10}
+                          placeholder="10-digit number"
+                          value={newPhone}
+                          onChange={(e) => setNewPhone(e.target.value.replace(/\D/g, ''))}
+                          className="w-full px-2 py-1.5 text-xs border border-neutral-300 rounded-r font-semibold text-black focus:outline-none focus:border-black"
+                          autoFocus
+                        />
+                        <button
+                          type="button"
+                          onClick={() => handleSavePhone()}
+                          className="px-3 py-1.5 bg-black hover:bg-neutral-800 text-white text-[10px] font-black uppercase rounded cursor-pointer transition-colors"
+                        >
+                          Save
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setIsEditingPhone(false);
+                            setPhoneError('');
+                          }}
+                          className="px-2 py-1.5 text-neutral-400 hover:text-black text-[10px] font-bold uppercase cursor-pointer"
+                        >
+                          Cancel
+                        </button>
+                      </div>
+                      {phoneError && (
+                        <p className="text-[10px] text-red-600 font-semibold">{phoneError}</p>
+                      )}
+                    </div>
+                  ) : (
+                    <span className="font-semibold text-black text-xs block pt-0.5">
+                      {user.phone && user.phone !== '9876543210' ? (
+                        `+91 ${user.phone}`
+                      ) : (
+                        <span className="text-amber-700 font-medium italic text-[11px]">
+                          Not provided (Click &apos;+ Add Number&apos;)
+                        </span>
+                      )}
+                    </span>
+                  )}
                 </div>
+
                 <div>
                   <span className="text-[10px] font-bold uppercase text-neutral-400 block tracking-wider">
                     Member Since
                   </span>
-                  <span className="font-semibold text-black">{user.joinedDate}</span>
+                  <span className="font-semibold text-black text-xs block pt-0.5">{user.joinedDate}</span>
                 </div>
               </div>
             </div>

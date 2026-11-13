@@ -36,7 +36,8 @@ interface StoreContextType {
   toasts: Toast[];
 
   registerUser: (data: { fullName: string; phone: string; email: string; password?: string }) => { success: boolean; message?: string };
-  loginUser: (email: string, password?: string) => { success: boolean; message?: string };
+  loginUser: (email: string, password?: string) => { success: boolean; isNew?: boolean; notRegistered?: boolean; message?: string };
+  updateUserProfile: (data: { fullName?: string; phone?: string }) => { success: boolean; message?: string };
   logoutUser: () => void;
 
   openCart: () => void;
@@ -110,7 +111,13 @@ export function StoreProvider({ children }: { children: ReactNode }) {
     try {
       const storedUser = localStorage.getItem('valjons_current_user_v1');
       if (storedUser) {
-        setUser(JSON.parse(storedUser));
+        const parsed = JSON.parse(storedUser);
+        // Clear out placeholder phone number from previous session
+        if (parsed.phone === '9876543210') {
+          parsed.phone = '';
+          localStorage.setItem('valjons_current_user_v1', JSON.stringify(parsed));
+        }
+        setUser(parsed);
       }
     } catch (e) {
       console.warn('Could not parse stored user:', e);
@@ -256,14 +263,16 @@ export function StoreProvider({ children }: { children: ReactNode }) {
       const accounts = accountsRaw ? JSON.parse(accountsRaw) : {};
 
       let account = accounts[cleanEmail];
+      let isNew = false;
       if (!account) {
-        // Auto-create active atelier member profile if not previously stored
+        // Create active atelier profile on-the-fly without fake dummy phone
+        isNew = true;
         const defaultName = cleanEmail.split('@')[0];
         const formattedName = defaultName.charAt(0).toUpperCase() + defaultName.slice(1);
         const newAccount: UserAccount = {
           fullName: formattedName,
           email: cleanEmail,
-          phone: '9876543210',
+          phone: '',
           joinedDate: new Date().toLocaleDateString('en-US', { month: 'short', year: 'numeric' }),
           tier: 'Atelier Member',
           isLoggedIn: true,
@@ -285,13 +294,46 @@ export function StoreProvider({ children }: { children: ReactNode }) {
       localStorage.setItem('valjons_current_user_v1', JSON.stringify(activeUser));
       setUser(activeUser);
       addToast(`Welcome back, ${activeUser.fullName.split(' ')[0]}!`);
-      return { success: true };
+      return { success: true, isNew };
     } catch (e: any) {
       console.error('Login failed:', e);
       addToast('Login error, please try again', 'error');
       return { success: false, message: e.message };
     }
   }, [addToast]);
+
+  const updateUserProfile = useCallback((data: { fullName?: string; phone?: string }) => {
+    try {
+      if (!user) return { success: false, message: 'Not logged in' };
+
+      const updatedUser: UserAccount = {
+        ...user,
+        fullName: data.fullName !== undefined ? data.fullName.trim() : user.fullName,
+        phone: data.phone !== undefined ? data.phone.trim() : user.phone,
+      };
+
+      const cleanEmail = user.email.trim().toLowerCase();
+      const accountsRaw = localStorage.getItem('valjons_registered_users_v1');
+      const accounts = accountsRaw ? JSON.parse(accountsRaw) : {};
+      if (accounts[cleanEmail]) {
+        accounts[cleanEmail] = {
+          ...accounts[cleanEmail],
+          fullName: updatedUser.fullName,
+          phone: updatedUser.phone,
+        };
+        localStorage.setItem('valjons_registered_users_v1', JSON.stringify(accounts));
+      }
+
+      localStorage.setItem('valjons_current_user_v1', JSON.stringify(updatedUser));
+      setUser(updatedUser);
+      addToast('Profile updated successfully!');
+      return { success: true };
+    } catch (e: any) {
+      console.error('Update profile error:', e);
+      addToast('Could not update profile', 'error');
+      return { success: false, message: e.message };
+    }
+  }, [user, addToast]);
 
   const logoutUser = useCallback(() => {
     localStorage.removeItem('valjons_current_user_v1');
@@ -319,6 +361,7 @@ export function StoreProvider({ children }: { children: ReactNode }) {
 
         registerUser,
         loginUser,
+        updateUserProfile,
         logoutUser,
 
         openCart: () => setIsCartOpen(true),
