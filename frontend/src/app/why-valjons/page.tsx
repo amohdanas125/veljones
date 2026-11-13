@@ -1,9 +1,24 @@
-'use client';
-
 import React from 'react';
+import type { Metadata } from 'next';
 import Link from 'next/link';
 import { ArrowLeft, Award, RefreshCw, Scissors, HeartHandshake, CheckCircle2, ArrowRight } from 'lucide-react';
 import ValjonsLogo from '@/components/ValjonsLogo';
+
+export const metadata: Metadata = {
+  title: 'Why VALJONS? · Architectural 280 GSM Fleece & Pattern Drafting',
+  description:
+    'Learn why VALJONS refuses fast-fashion shortcuts. Mill-direct 280 GSM PC fleece, bespoke straight-fit drafting, zero shrinkage, and numbered small batch drops.',
+  alternates: {
+    canonical: '/why-valjons',
+  },
+  openGraph: {
+    title: 'Why VALJONS? · The 4 Atelier Pillars',
+    description:
+      'Mill-direct 280 GSM PC fleece, bespoke straight-fit drafting, zero shrinkage, and numbered small batch drops.',
+    url: 'https://heartfelt-trifle-08576c.netlify.app/why-valjons',
+    siteName: 'VALJONS Atelier',
+  },
+};
 
 export default function WhyValjonsPage() {
   const pillars = [

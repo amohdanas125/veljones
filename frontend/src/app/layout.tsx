@@ -13,6 +13,9 @@ import VideoReelModal from '@/components/VideoReelModal';
 import OurStoryModal from '@/components/OurStoryModal';
 import ContactModal from '@/components/ContactModal';
 import ToastContainer from '@/components/ToastContainer';
+import JsonLd from '@/components/JsonLd';
+
+const SITE_URL = 'https://heartfelt-trifle-08576c.netlify.app';
 
 const poppins = Poppins({
   variable: '--font-poppins',
@@ -29,9 +32,80 @@ const montserrat = Montserrat({
 });
 
 export const metadata: Metadata = {
-  title: 'VALJONS | Drop 001 — PC Fleece (280 GSM, Straight Fit)',
-  description: 'Engineered for longevity. High-end PC fleece streetwear essentials, 280 GSM straight-fit silhouettes.',
-  keywords: ['VALJONS', 'streetwear', 'luxury fleece', 'straight fit sweatpants', '280 GSM', 'Drop 001', 'PC Fleece'],
+  metadataBase: new URL(SITE_URL),
+  title: {
+    default: 'VALJONS | Drop 001 — PC Fleece (280 GSM, Straight Fit)',
+    template: '%s | VALJONS',
+  },
+  description:
+    'Engineered for longevity. High-end PC fleece streetwear essentials, 280 GSM straight-fit silhouettes, custom dye palettes, and Indian atelier craft.',
+  keywords: [
+    'VALJONS',
+    'VALJONES',
+    'streetwear India',
+    'luxury fleece',
+    'straight fit sweatpants',
+    '280 GSM fleece',
+    'Drop 001',
+    'PC Fleece',
+    'architectural streetwear',
+    'premium oversized tees',
+    'cash on delivery streetwear',
+  ],
+  authors: [{ name: 'VALJONS Atelier', url: SITE_URL }],
+  creator: 'VALJONS',
+  publisher: 'VALJONS Atelier',
+  formatDetection: {
+    email: false,
+    address: false,
+    telephone: false,
+  },
+  alternates: {
+    canonical: '/',
+  },
+  openGraph: {
+    title: 'VALJONS | Drop 001 — PC Fleece (280 GSM, Straight Fit)',
+    description:
+      'Engineered for longevity. High-end PC fleece streetwear essentials, 280 GSM straight-fit silhouettes.',
+    url: SITE_URL,
+    siteName: 'VALJONS Atelier',
+    locale: 'en_IN',
+    type: 'website',
+    images: [
+      {
+        url: '/images/products/valjons-heavyweight-fleece.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'VALJONS Heavyweight PC Fleece Atelier Drop 001',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'VALJONS | Drop 001 — PC Fleece (280 GSM, Straight Fit)',
+    description:
+      'Engineered for longevity. High-end PC fleece streetwear essentials, 280 GSM straight-fit silhouettes.',
+    creator: '@valjons',
+    images: ['/images/products/valjons-heavyweight-fleece.jpg'],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
+  icons: {
+    icon: [
+      { url: '/images/valjons-monogram-black.png', type: 'image/png' },
+      { url: '/images/valjons-monogram.svg', type: 'image/svg+xml' },
+    ],
+    apple: [{ url: '/images/valjons-monogram-black.png' }],
+  },
 };
 
 export default function RootLayout({
@@ -41,6 +115,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="scroll-smooth">
+      <head>
+        <JsonLd />
+      </head>
       <body
         className={`${poppins.variable} ${montserrat.variable} antialiased bg-white text-neutral-900 selection:bg-black selection:text-white`}
       >

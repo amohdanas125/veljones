@@ -28,6 +28,16 @@ const nextConfig: NextConfig = {
         destination: '/why-valjons',
         permanent: true,
       },
+      {
+        source: '/about us',
+        destination: '/about',
+        permanent: true,
+      },
+      {
+        source: '/about-us',
+        destination: '/about',
+        permanent: true,
+      },
     ];
   },
   images: {

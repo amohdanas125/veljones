@@ -67,12 +67,12 @@ export default function Header() {
               <a href="#shop-collection" className="hover:opacity-60 transition-opacity">
                 Shop
               </a>
-              <button
-                onClick={openOurStory}
-                className="hover:opacity-60 transition-opacity cursor-pointer uppercase font-bold"
-              >
-                Our Story
-              </button>
+              <Link href="/about" className="hover:opacity-60 transition-opacity">
+                About Us
+              </Link>
+              <Link href="/why-valjons" className="hover:opacity-60 transition-opacity">
+                Why VALJONS
+              </Link>
               <button
                 onClick={openContact}
                 className="hover:opacity-60 transition-opacity cursor-pointer uppercase font-bold"

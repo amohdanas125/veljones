@@ -1,1 +1,1 @@
-export { default } from '../why-valjons/page';
+export { default, metadata } from '../why-valjons/page';

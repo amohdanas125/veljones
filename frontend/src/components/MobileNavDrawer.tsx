@@ -78,20 +78,31 @@ export default function MobileNavDrawer() {
               </span>
             </a>
 
-            {/* 3. Our Story */}
-            <button
-              onClick={() => {
-                closeMenu();
-                openOurStory();
-              }}
-              className="flex justify-between items-center text-black hover:opacity-60 transition-opacity py-1 border-b border-neutral-100 w-full text-left cursor-pointer"
+            {/* 3. About Us */}
+            <Link
+              href="/about"
+              onClick={closeMenu}
+              className="flex justify-between items-center text-black hover:opacity-60 transition-opacity py-1 border-b border-neutral-100 w-full"
             >
               <div className="flex items-center gap-3">
                 <BookOpen className="w-4 h-4 text-neutral-500" />
-                <span>Our Story</span>
+                <span>About Us</span>
               </div>
               <ArrowRight className="w-4 h-4 text-neutral-400" />
-            </button>
+            </Link>
+
+            {/* 4. Why VALJONS */}
+            <Link
+              href="/why-valjons"
+              onClick={closeMenu}
+              className="flex justify-between items-center text-black hover:opacity-60 transition-opacity py-1 border-b border-neutral-100 w-full"
+            >
+              <div className="flex items-center gap-3">
+                <Sparkles className="w-4 h-4 text-[#801414]" />
+                <span>Why VALJONS</span>
+              </div>
+              <ArrowRight className="w-4 h-4 text-neutral-400" />
+            </Link>
 
             {/* 4. Contact */}
             <button
