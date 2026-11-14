@@ -78,3 +78,46 @@ export interface CartResponse {
   total: number;
   currency: string;
 }
+
+export interface AdminOrderItem {
+  productId: number;
+  title: string;
+  size: string;
+  quantity: number;
+  price: number;
+  thumbnail: string;
+}
+
+export type OrderStatus = 'Pending' | 'Confirmed' | 'Processing' | 'Shipped' | 'Delivered' | 'Cancelled';
+
+export interface AdminOrder {
+  id: string;
+  orderNumber: string;
+  customerName: string;
+  customerEmail: string;
+  customerPhone: string;
+  shippingAddress: string;
+  city: string;
+  state: string;
+  pincode: string;
+  items: AdminOrderItem[];
+  totalAmount: number;
+  paymentMethod: 'COD' | 'UPI' | 'Card' | 'NetBanking';
+  paymentStatus: 'Paid' | 'Pending' | 'Refunded';
+  orderStatus: OrderStatus;
+  carrier?: string;
+  trackingNumber?: string;
+  createdAt: string;
+}
+
+export interface CustomerRecord {
+  id: string;
+  fullName: string;
+  email: string;
+  phone: string;
+  tier: string;
+  totalOrders: number;
+  totalSpent: number;
+  joinedDate: string;
+  lastOrderDate: string;
+}

@@ -2,10 +2,16 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { ArrowRight, ShieldCheck, Truck, RefreshCw, Send, Lock, RotateCcw, Leaf } from 'lucide-react';
 import ValjonsLogo from './ValjonsLogo';
 
 export default function ValjonsFooter() {
+  const pathname = usePathname();
+  if (pathname?.startsWith('/admin')) {
+    return null;
+  }
+
   const [email, setEmail] = useState('');
   const [subscribed, setSubscribed] = useState(false);
 

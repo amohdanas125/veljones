@@ -12,6 +12,11 @@ export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const pathname = usePathname();
 
+  // Hide customer header entirely on Admin routes
+  if (pathname?.startsWith('/admin')) {
+    return null;
+  }
+
   const isHome = pathname === '/';
   // Transparent only when on homepage and at top of the page
   const isTransparent = isHome && !isScrolled;
