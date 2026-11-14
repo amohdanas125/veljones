@@ -3,6 +3,7 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { useStore } from '@/context/StoreContext';
+import { useMedia } from '@/context/MediaContext';
 import { Reel } from '@/types';
 
 interface CoverflowReelCardProps {
@@ -106,6 +107,7 @@ const CoverflowReelCard = React.memo(function CoverflowReelCard({
 
 export default function InstagramFeedSection() {
   const { openVideoReel } = useStore();
+  const { reels: instaReels } = useMedia();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
@@ -116,74 +118,6 @@ export default function InstagramFeedSection() {
   const isSwipingHorizontalRef = useRef<boolean | null>(null);
   const isDraggingRef = useRef<boolean>(false);
   const rafIdRef = useRef<number | null>(null);
-
-  // 8 Curated Reels directly matching reference layout (04 / 08 counter)
-  const instaReels: Reel[] = [
-    {
-      id: 1,
-      title: 'VALJONS DROP 001 Haul',
-      videoUrl: '/videos/reels/reel-new-collection.mp4',
-      thumbnailUrl: '/images/reels/thumb-new-collection.jpg',
-      authorHandle: '@valjons',
-      duration: '0:30',
-    },
-    {
-      id: 2,
-      title: 'Vintage Wash Zip Denim Fit Check',
-      videoUrl: '/videos/reels/reel-fit-check-denim.mp4',
-      thumbnailUrl: '/images/reels/thumb-fit-check-denim.jpg',
-      authorHandle: '@valjons',
-      duration: '0:45',
-    },
-    {
-      id: 3,
-      title: 'Pants Rotation — Drop 001',
-      videoUrl: '/videos/reels/reel-streetwear-motion.mp4',
-      thumbnailUrl: '/images/reels/thumb-streetwear-motion.jpg',
-      authorHandle: '@valjons',
-      duration: '0:28',
-    },
-    {
-      id: 4,
-      title: 'Summer Refined · Tailored Streetwear',
-      videoUrl: '/videos/reels/reel-summer-refined.mp4',
-      thumbnailUrl: '/images/reels/thumb-summer-refined.jpg',
-      authorHandle: '@valjons',
-      duration: '0:35',
-    },
-    {
-      id: 5,
-      title: 'Atelier Tailored Transformation',
-      videoUrl: '/videos/reels/reel-suit-transformation.mp4',
-      thumbnailUrl: '/images/reels/thumb-suit-transformation.jpg',
-      authorHandle: '@valjons',
-      duration: '0:38',
-    },
-    {
-      id: 6,
-      title: 'Il Lago Edit Collection',
-      videoUrl: '/videos/reels/reel-lago-collection.mp4',
-      thumbnailUrl: '/images/reels/thumb-lago-collection.jpg',
-      authorHandle: '@valjons',
-      duration: '0:40',
-    },
-    {
-      id: 7,
-      title: 'Drop 001 Architectural Drape',
-      videoUrl: '/videos/hero-drop-001.mp4',
-      thumbnailUrl: '/videos/hero-poster.jpg',
-      authorHandle: '@valjons',
-      duration: '0:32',
-    },
-    {
-      id: 8,
-      title: 'Minimal Silhouette · 280 GSM',
-      videoUrl: '/videos/reels/reel-fit-check-denim.mp4',
-      thumbnailUrl: '/images/products/valjons-drop001-lifestyle-fit.jpg',
-      authorHandle: '@valjons',
-      duration: '0:36',
-    },
-  ];
 
   const total = instaReels.length;
 

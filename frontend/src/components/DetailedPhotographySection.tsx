@@ -19,6 +19,7 @@ import {
   ArrowRight,
   Eye,
 } from 'lucide-react';
+import { useMedia } from '@/context/MediaContext';
 
 interface Hotspot {
   id: number;
@@ -41,7 +42,8 @@ interface Perspective {
 }
 
 export default function DetailedPhotographySection() {
-  const perspectives: Perspective[] = [
+  const { perspectives: dynamicPerspectives } = useMedia();
+  const defaultPerspectives: Perspective[] = [
     {
       id: 0,
       tag: '01 // SILHOUETTE',
@@ -192,6 +194,8 @@ export default function DetailedPhotographySection() {
     },
   ];
 
+  const perspectives = dynamicPerspectives && dynamicPerspectives.length > 0 ? dynamicPerspectives : defaultPerspectives;
+
   const [activeIdx, setActiveIdx] = useState(0);
   const [activeHotspotId, setActiveHotspotId] = useState<number | null>(null);
   const [isLoupeEnabled, setIsLoupeEnabled] = useState(true);
@@ -206,7 +210,8 @@ export default function DetailedPhotographySection() {
   const dragStartRef = useRef({ x: 0, y: 0, originX: 0, originY: 0 });
   const stageRef = useRef<HTMLDivElement>(null);
 
-  const active = perspectives[activeIdx];
+  const safeIdx = Math.min(activeIdx, Math.max(0, perspectives.length - 1));
+  const active = perspectives[safeIdx] || perspectives[0];
 
   // Mouse Move on Stage for Precision Loupe
   const handleStageMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {

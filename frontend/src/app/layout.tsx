@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { Poppins, Montserrat } from 'next/font/google';
 import './globals.css';
 import { StoreProvider } from '@/context/StoreContext';
+import { MediaProvider } from '@/context/MediaContext';
 import Header from '@/components/Header';
 import ValjonsFooter from '@/components/ValjonsFooter';
 import CartDrawer from '@/components/CartDrawer';
@@ -122,22 +123,24 @@ export default function RootLayout({
         className={`${poppins.variable} ${montserrat.variable} antialiased bg-white text-neutral-900 selection:bg-black selection:text-white`}
       >
         <StoreProvider>
-          <div className="flex flex-col min-h-screen">
-            <Header />
-            <main className="flex-1">{children}</main>
-            <ValjonsFooter />
-          </div>
+          <MediaProvider>
+            <div className="flex flex-col min-h-screen">
+              <Header />
+              <main className="flex-1">{children}</main>
+              <ValjonsFooter />
+            </div>
 
-          {/* Overlays & Drawers */}
-          <CartDrawer />
-          <WishlistDrawer />
-          <SearchModal />
-          <MobileNavDrawer />
-          <QuickViewModal />
-          <VideoReelModal />
-          <OurStoryModal />
-          <ContactModal />
-          <ToastContainer />
+            {/* Overlays & Drawers */}
+            <CartDrawer />
+            <WishlistDrawer />
+            <SearchModal />
+            <MobileNavDrawer />
+            <QuickViewModal />
+            <VideoReelModal />
+            <OurStoryModal />
+            <ContactModal />
+            <ToastContainer />
+          </MediaProvider>
         </StoreProvider>
       </body>
     </html>

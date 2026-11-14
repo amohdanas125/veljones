@@ -20,6 +20,8 @@ import {
   Sparkles,
   ShieldCheck,
   ChevronRight,
+  Video,
+  Film,
 } from 'lucide-react';
 import { AdminProvider, useAdmin } from '@/context/AdminContext';
 import ValjonsLogo from '@/components/ValjonsLogo';
@@ -74,6 +76,7 @@ function AdminShell({ children }: { children: React.ReactNode }) {
           badgeColor: 'bg-black text-white',
         },
         { label: 'Inventory Matrix', href: '/admin/inventory', icon: Layers },
+        { label: 'Media & Studio', href: '/admin/media', icon: Video, badge: 'Reels & Videos' },
       ],
     },
     {

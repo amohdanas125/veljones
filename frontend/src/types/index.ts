@@ -121,3 +121,59 @@ export interface CustomerRecord {
   joinedDate: string;
   lastOrderDate: string;
 }
+
+export interface HeroConfig {
+  videoUrl: string;
+  posterUrl: string;
+  pillTag: string;
+  heading: string;
+  subheading: string;
+  ctaText: string;
+  ctaLink: string;
+}
+
+export interface PerspectiveHotspot {
+  id: number;
+  x: number;
+  y: number;
+  title: string;
+  tag: string;
+  spec: string;
+}
+
+export interface PerspectiveSpec {
+  label: string;
+  value: string;
+}
+
+export interface PerspectiveItem {
+  id: number;
+  tag: string;
+  title: string;
+  subtitle: string;
+  description: string;
+  imageUrl: string;
+  hotspots: PerspectiveHotspot[];
+  specs: PerspectiveSpec[];
+}
+
+export interface LifestyleConfig {
+  editorialTag: string;
+  mainHeading: string;
+  description: string;
+  primaryLook: {
+    lookTag: string;
+    title: string;
+    description: string;
+    imageUrl: string;
+    link: string;
+  };
+  secondaryLooks: {
+    id: number;
+    title: string;
+    tag: string;
+    imageUrl: string;
+    link: string;
+  }[];
+}
+
