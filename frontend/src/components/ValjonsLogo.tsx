@@ -7,6 +7,7 @@ interface ValjonsLogoProps {
   className?: string;
   theme?: 'dark' | 'light' | 'auto'; // dark = white logo (on dark bg), light = black logo (on light bg)
   showMonogram?: boolean;
+  showWordmark?: boolean;
   size?: 'sm' | 'md' | 'lg';
 }
 
@@ -14,6 +15,7 @@ export default function ValjonsLogo({
   className = '',
   theme = 'auto',
   showMonogram = true,
+  showWordmark = true,
   size = 'md',
 }: ValjonsLogoProps) {
   // Height and aspect ratio sizing for exact original monogram proportions (403:252)
@@ -67,17 +69,19 @@ export default function ValjonsLogo({
       )}
 
       {/* Clean Bold Wordmark in Poppins */}
-      <span
-        className={`font-poppins font-black uppercase leading-none transition-colors duration-300 ${textSizes[size]} ${
-          theme === 'dark'
-            ? 'text-white'
-            : theme === 'light'
-            ? 'text-black'
-            : 'text-current'
-        }`}
-      >
-        VALJONS
-      </span>
+      {showWordmark && (
+        <span
+          className={`font-poppins font-black uppercase leading-none transition-colors duration-300 ${textSizes[size]} ${
+            theme === 'dark'
+              ? 'text-white'
+              : theme === 'light'
+              ? 'text-black'
+              : 'text-current'
+          }`}
+        >
+          VALJONS
+        </span>
+      )}
     </Link>
   );
 }

@@ -18,6 +18,7 @@ import {
   Layers,
   Sparkles,
   CheckCircle2,
+  Flame,
 } from 'lucide-react';
 import { useAdmin } from '@/context/AdminContext';
 import { Product } from '@/types';
@@ -129,7 +130,7 @@ export default function AdminProductsPage() {
     });
 
     setIsAddModalOpen(false);
-    showToast(`✓ Added product "${formData.title}" successfully!`);
+    showToast(`✓ Added garment "${formData.title}" to catalog!`);
   };
 
   const handleSaveEdit = (e: React.FormEvent) => {
@@ -155,7 +156,7 @@ export default function AdminProductsPage() {
     if (deletingProductId !== null) {
       deleteProduct(deletingProductId);
       setDeletingProductId(null);
-      showToast('✓ Product deleted from catalog.');
+      showToast('✓ Product removed from active catalog.');
     }
   };
 
@@ -163,30 +164,30 @@ export default function AdminProductsPage() {
     <div className="space-y-8 font-montserrat">
       {/* Toast Notification */}
       {toastMessage && (
-        <div className="fixed top-6 right-6 z-50 bg-emerald-500 text-black font-bold text-xs uppercase tracking-wider py-3 px-5 rounded-xl shadow-2xl animate-in slide-in-from-top duration-300 flex items-center gap-2">
-          <CheckCircle2 className="w-4 h-4" />
+        <div className="fixed top-6 right-6 z-50 bg-gradient-to-r from-[#801414] to-[#C1272D] text-white font-bold text-xs uppercase tracking-wider py-3 px-5 rounded-2xl shadow-[0_0_30px_rgba(128,20,20,0.7)] border border-white/20 animate-in slide-in-from-top duration-300 flex items-center gap-2">
+          <CheckCircle2 className="w-4 h-4 text-[#FFA4A4]" />
           <span>{toastMessage}</span>
         </div>
       )}
 
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-6 border-b border-white/10 gap-4">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-6 border-b border-[#801414]/20 gap-4">
         <div>
-          <div className="inline-flex items-center gap-2 text-[10px] font-mono font-bold uppercase tracking-[0.2em] text-cyan-400">
-            <ShoppingBag className="w-3.5 h-3.5" />
-            <span>CATALOG & PRODUCT CRUD</span>
+          <div className="inline-flex items-center gap-2 text-[10px] font-mono font-bold uppercase tracking-[0.2em] text-[#FFA4A4]">
+            <ShoppingBag className="w-3.5 h-3.5 text-[#E83D4D]" />
+            <span>ATELIER CATALOG & CRUD</span>
           </div>
           <h2 className="text-2xl sm:text-3xl font-black font-poppins uppercase tracking-tight text-white">
-            Atelier Products Management
+            Garments Management
           </h2>
           <p className="text-xs text-neutral-400">
-            Create, edit, adjust inventory, and manage Drop 001 silhouettes & archives ({products.length} products).
+            Create, edit, adjust inventory, and manage Drop 001 silhouettes & archives ({products.length} pieces).
           </p>
         </div>
 
         <button
           onClick={handleOpenAdd}
-          className="px-4 py-2.5 rounded-xl bg-gradient-to-r from-cyan-500 to-teal-500 hover:from-cyan-400 hover:to-teal-400 text-black text-xs font-black uppercase tracking-wider transition-all shadow-lg flex items-center gap-2 cursor-pointer active:scale-95"
+          className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-[#801414] via-[#991B1B] to-[#C1272D] hover:from-[#991B1B] hover:to-[#E83D4D] text-white text-xs font-black uppercase tracking-wider transition-all shadow-[0_0_20px_rgba(128,20,20,0.5)] flex items-center gap-2 cursor-pointer active:scale-95"
         >
           <Plus className="w-4 h-4 stroke-[3]" />
           <span>Add New Garment</span>
@@ -194,15 +195,15 @@ export default function AdminProductsPage() {
       </div>
 
       {/* Search & Filter Bar */}
-      <div className="p-4 rounded-2xl bg-slate-900/60 backdrop-blur-xl border border-white/10 shadow-lg flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div className="p-4 rounded-2xl bg-[#140D0F]/90 backdrop-blur-xl border border-[#801414]/30 shadow-xl flex flex-col sm:flex-row items-center justify-between gap-4">
         <div className="relative w-full sm:w-80">
-          <Search className="w-4 h-4 text-neutral-400 absolute left-3 top-1/2 -translate-y-1/2" />
+          <Search className="w-4 h-4 text-[#A87178] absolute left-3 top-1/2 -translate-y-1/2" />
           <input
             type="text"
             placeholder="Search by title, SKU, or tag..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full bg-slate-800/80 border border-white/10 rounded-xl pl-9 pr-4 py-2 text-xs text-white placeholder-neutral-500 focus:outline-none focus:border-cyan-400"
+            className="w-full bg-[#1A1013] border border-[#801414]/30 rounded-xl pl-9 pr-4 py-2 text-xs text-white placeholder-neutral-500 focus:outline-none focus:border-[#E83D4D]"
           />
         </div>
 
@@ -213,8 +214,8 @@ export default function AdminProductsPage() {
               onClick={() => setSelectedCategory(cat)}
               className={`px-3 py-1.5 rounded-xl text-[11px] font-bold uppercase tracking-wider transition-all cursor-pointer whitespace-nowrap ${
                 selectedCategory === cat
-                  ? 'bg-cyan-500 text-black shadow-sm'
-                  : 'bg-white/5 text-neutral-400 hover:text-white border border-white/5'
+                  ? 'bg-gradient-to-r from-[#801414] to-[#C1272D] text-white shadow-[0_0_12px_rgba(128,20,20,0.6)]'
+                  : 'bg-black/40 text-neutral-400 hover:text-white border border-[#801414]/20'
               }`}
             >
               {cat.replace('-', ' ')}
@@ -224,11 +225,11 @@ export default function AdminProductsPage() {
       </div>
 
       {/* Products Data Table */}
-      <div className="rounded-2xl bg-slate-900/60 backdrop-blur-xl border border-white/10 shadow-xl overflow-hidden">
+      <div className="rounded-3xl bg-[#140D0F]/90 backdrop-blur-xl border border-[#801414]/30 shadow-2xl overflow-hidden">
         <div className="overflow-x-auto no-scrollbar">
           <table className="w-full text-left text-xs">
             <thead>
-              <tr className="bg-slate-800/60 border-b border-white/10 text-[10px] font-mono font-bold uppercase tracking-wider text-neutral-400">
+              <tr className="bg-black/50 border-b border-[#801414]/20 text-[10px] font-mono font-bold uppercase tracking-wider text-[#A87178]">
                 <th className="py-4 px-6">Product</th>
                 <th className="py-4 px-4">Category</th>
                 <th className="py-4 px-4">Price (INR)</th>
@@ -237,36 +238,36 @@ export default function AdminProductsPage() {
                 <th className="py-4 px-6 text-right">Actions</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-white/5 font-medium">
+            <tbody className="divide-y divide-[#801414]/10 font-medium">
               {filteredProducts.map((p) => {
                 const totalStock = p.variants?.reduce((sum, v) => sum + (v.stock || 10), 0) || 35;
                 const isOutOfStock = totalStock <= 0;
                 const isLowStock = totalStock > 0 && totalStock < 15;
 
                 return (
-                  <tr key={p.id} className="hover:bg-white/5 transition-colors group">
+                  <tr key={p.id} className="hover:bg-[#801414]/10 transition-colors group">
                     {/* Thumbnail & Title */}
                     <td className="py-4 px-6">
                       <div className="flex items-center gap-3">
-                        <div className="w-12 h-14 rounded-lg overflow-hidden bg-black/40 border border-white/10 shrink-0">
+                        <div className="w-12 h-14 rounded-xl overflow-hidden bg-black/60 border border-[#801414]/40 shrink-0 shadow-sm group-hover:border-[#E83D4D] transition-colors">
                           <img
                             src={p.thumbnail}
                             alt={p.title}
-                            className="w-full h-full object-cover object-center"
+                            className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform"
                           />
                         </div>
                         <div>
-                          <p className="font-poppins font-bold text-xs uppercase text-white group-hover:text-cyan-400 transition-colors">
+                          <p className="font-poppins font-bold text-xs uppercase text-white group-hover:text-[#FFA4A4] transition-colors">
                             {p.title}
                           </p>
-                          <p className="text-[10px] font-mono text-neutral-400">SKU: VJ-DROP001-{p.id}</p>
+                          <p className="text-[10px] font-mono text-[#A87178]">SKU: VJ-DROP001-{p.id}</p>
                         </div>
                       </div>
                     </td>
 
                     {/* Category */}
                     <td className="py-4 px-4">
-                      <span className="px-2.5 py-1 rounded-full text-[10px] font-mono font-bold uppercase bg-slate-800 text-neutral-300 border border-white/10">
+                      <span className="px-2.5 py-1 rounded-full text-[10px] font-mono font-bold uppercase bg-black/60 text-[#FFA4A4] border border-[#801414]/40">
                         {p.categorySlug || 'Unisex'}
                       </span>
                     </td>
@@ -306,7 +307,7 @@ export default function AdminProductsPage() {
                     </td>
 
                     {/* Badge */}
-                    <td className="py-4 px-4 font-mono text-[10px] text-cyan-400">
+                    <td className="py-4 px-4 font-mono text-[10px] text-[#FFA4A4]">
                       {p.badge || '—'}
                     </td>
 
@@ -317,7 +318,7 @@ export default function AdminProductsPage() {
                           href={`/product/${p.slug}`}
                           target="_blank"
                           title="View on public storefront"
-                          className="p-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-neutral-300 hover:text-white border border-white/10 transition-colors"
+                          className="p-1.5 rounded-lg bg-black/60 hover:bg-[#801414]/30 text-neutral-300 hover:text-white border border-[#801414]/30 transition-colors"
                         >
                           <ExternalLink className="w-3.5 h-3.5" />
                         </Link>
@@ -325,7 +326,7 @@ export default function AdminProductsPage() {
                         <button
                           onClick={() => handleOpenEdit(p)}
                           title="Edit product"
-                          className="p-1.5 rounded-lg bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 transition-colors cursor-pointer"
+                          className="p-1.5 rounded-lg bg-[#801414]/20 hover:bg-[#801414]/40 text-[#FFA4A4] border border-[#801414]/40 transition-colors cursor-pointer"
                         >
                           <Edit2 className="w-3.5 h-3.5" />
                         </button>
@@ -349,9 +350,9 @@ export default function AdminProductsPage() {
 
       {/* CREATE / ADD PRODUCT MODAL */}
       {isAddModalOpen && (
-        <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-4">
-          <div className="w-full max-w-2xl bg-slate-900 border border-white/10 rounded-2xl p-6 sm:p-8 space-y-6 max-h-[90vh] overflow-y-auto animate-in zoom-in-95 duration-200">
-            <div className="flex items-center justify-between pb-4 border-b border-white/10">
+        <div className="fixed inset-0 z-50 bg-black/85 backdrop-blur-md flex items-center justify-center p-4">
+          <div className="w-full max-w-2xl bg-[#160E10] border border-[#801414]/40 rounded-3xl p-6 sm:p-8 space-y-6 max-h-[90vh] overflow-y-auto animate-in zoom-in-95 duration-200 shadow-2xl">
+            <div className="flex items-center justify-between pb-4 border-b border-[#801414]/20">
               <div>
                 <h3 className="font-poppins font-black text-lg text-white uppercase">Add New Atelier Piece</h3>
                 <p className="text-xs text-neutral-400">Deploy a new garment directly into VALJONS Drop 001.</p>
@@ -367,23 +368,23 @@ export default function AdminProductsPage() {
             <form onSubmit={handleSaveAdd} className="space-y-4">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="space-y-1">
-                  <label className="text-[11px] font-mono uppercase text-neutral-300">Garment Title</label>
+                  <label className="text-[11px] font-mono uppercase text-[#FFA4A4]">Garment Title</label>
                   <input
                     type="text"
                     required
                     placeholder="e.g. VALJONS STRAIGHT FIT PC FLEECE (DESERT SAND)"
                     value={formData.title}
                     onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-                    className="w-full bg-slate-800 border border-white/10 rounded-xl px-3 py-2 text-xs text-white"
+                    className="w-full bg-[#1F1417] border border-[#801414]/30 rounded-xl px-3 py-2 text-xs text-white focus:border-[#E83D4D]"
                   />
                 </div>
 
                 <div className="space-y-1">
-                  <label className="text-[11px] font-mono uppercase text-neutral-300">Category</label>
+                  <label className="text-[11px] font-mono uppercase text-[#FFA4A4]">Category</label>
                   <select
                     value={formData.categorySlug}
                     onChange={(e) => setFormData({ ...formData, categorySlug: e.target.value })}
-                    className="w-full bg-slate-800 border border-white/10 rounded-xl px-3 py-2 text-xs text-white"
+                    className="w-full bg-[#1F1417] border border-[#801414]/30 rounded-xl px-3 py-2 text-xs text-white focus:border-[#E83D4D]"
                   >
                     <option value="sweatpants">Sweatpants / Fleece</option>
                     <option value="t-shirts">T-Shirts</option>
@@ -394,68 +395,68 @@ export default function AdminProductsPage() {
                 </div>
 
                 <div className="space-y-1">
-                  <label className="text-[11px] font-mono uppercase text-neutral-300">Selling Price (₹ INR)</label>
+                  <label className="text-[11px] font-mono uppercase text-[#FFA4A4]">Selling Price (₹ INR)</label>
                   <input
                     type="number"
                     required
                     value={formData.price}
                     onChange={(e) => setFormData({ ...formData, price: e.target.value })}
-                    className="w-full bg-slate-800 border border-white/10 rounded-xl px-3 py-2 text-xs text-white"
+                    className="w-full bg-[#1F1417] border border-[#801414]/30 rounded-xl px-3 py-2 text-xs text-white focus:border-[#E83D4D]"
                   />
                 </div>
 
                 <div className="space-y-1">
-                  <label className="text-[11px] font-mono uppercase text-neutral-300">Original / Strike Price (₹)</label>
+                  <label className="text-[11px] font-mono uppercase text-[#FFA4A4]">Original / Strike Price (₹)</label>
                   <input
                     type="number"
                     value={formData.originalPrice}
                     onChange={(e) => setFormData({ ...formData, originalPrice: e.target.value })}
-                    className="w-full bg-slate-800 border border-white/10 rounded-xl px-3 py-2 text-xs text-white"
+                    className="w-full bg-[#1F1417] border border-[#801414]/30 rounded-xl px-3 py-2 text-xs text-white focus:border-[#E83D4D]"
                   />
                 </div>
 
                 <div className="space-y-1">
-                  <label className="text-[11px] font-mono uppercase text-neutral-300">Initial Stock Units</label>
+                  <label className="text-[11px] font-mono uppercase text-[#FFA4A4]">Initial Stock Units</label>
                   <input
                     type="number"
                     value={formData.stock}
                     onChange={(e) => setFormData({ ...formData, stock: parseInt(e.target.value) || 0 })}
-                    className="w-full bg-slate-800 border border-white/10 rounded-xl px-3 py-2 text-xs text-white"
+                    className="w-full bg-[#1F1417] border border-[#801414]/30 rounded-xl px-3 py-2 text-xs text-white focus:border-[#E83D4D]"
                   />
                 </div>
 
                 <div className="space-y-1">
-                  <label className="text-[11px] font-mono uppercase text-neutral-300">Tag / Badge</label>
+                  <label className="text-[11px] font-mono uppercase text-[#FFA4A4]">Tag / Badge</label>
                   <input
                     type="text"
                     value={formData.badge}
                     onChange={(e) => setFormData({ ...formData, badge: e.target.value })}
-                    className="w-full bg-slate-800 border border-white/10 rounded-xl px-3 py-2 text-xs text-white"
+                    className="w-full bg-[#1F1417] border border-[#801414]/30 rounded-xl px-3 py-2 text-xs text-white focus:border-[#E83D4D]"
                   />
                 </div>
               </div>
 
               <div className="space-y-1">
-                <label className="text-[11px] font-mono uppercase text-neutral-300">Image Asset URL</label>
+                <label className="text-[11px] font-mono uppercase text-[#FFA4A4]">Image Asset URL</label>
                 <input
                   type="text"
                   value={formData.thumbnail}
                   onChange={(e) => setFormData({ ...formData, thumbnail: e.target.value })}
-                  className="w-full bg-slate-800 border border-white/10 rounded-xl px-3 py-2 text-xs text-white font-mono"
+                  className="w-full bg-[#1F1417] border border-[#801414]/30 rounded-xl px-3 py-2 text-xs text-white font-mono focus:border-[#E83D4D]"
                 />
               </div>
 
               <div className="space-y-1">
-                <label className="text-[11px] font-mono uppercase text-neutral-300">Fabric Description</label>
+                <label className="text-[11px] font-mono uppercase text-[#FFA4A4]">Fabric Description</label>
                 <textarea
                   rows={3}
                   value={formData.description}
                   onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-                  className="w-full bg-slate-800 border border-white/10 rounded-xl px-3 py-2 text-xs text-white"
+                  className="w-full bg-[#1F1417] border border-[#801414]/30 rounded-xl px-3 py-2 text-xs text-white focus:border-[#E83D4D]"
                 />
               </div>
 
-              <div className="pt-4 border-t border-white/10 flex items-center justify-end gap-3">
+              <div className="pt-4 border-t border-[#801414]/20 flex items-center justify-end gap-3">
                 <button
                   type="button"
                   onClick={() => setIsAddModalOpen(false)}
@@ -465,7 +466,7 @@ export default function AdminProductsPage() {
                 </button>
                 <button
                   type="submit"
-                  className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-cyan-500 to-teal-500 text-black text-xs font-black uppercase tracking-wider shadow-lg cursor-pointer"
+                  className="px-6 py-2.5 rounded-xl bg-gradient-to-r from-[#801414] via-[#991B1B] to-[#C1272D] text-white text-xs font-black uppercase tracking-wider shadow-[0_0_20px_rgba(128,20,20,0.6)] cursor-pointer"
                 >
                   Save & Publish
                 </button>
@@ -477,9 +478,9 @@ export default function AdminProductsPage() {
 
       {/* EDIT PRODUCT MODAL */}
       {editingProduct && (
-        <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-4">
-          <div className="w-full max-w-xl bg-slate-900 border border-white/10 rounded-2xl p-6 sm:p-8 space-y-6 animate-in zoom-in-95 duration-200">
-            <div className="flex items-center justify-between pb-4 border-b border-white/10">
+        <div className="fixed inset-0 z-50 bg-black/85 backdrop-blur-md flex items-center justify-center p-4">
+          <div className="w-full max-w-xl bg-[#160E10] border border-[#801414]/40 rounded-3xl p-6 sm:p-8 space-y-6 animate-in zoom-in-95 duration-200 shadow-2xl">
+            <div className="flex items-center justify-between pb-4 border-b border-[#801414]/20">
               <div>
                 <h3 className="font-poppins font-black text-lg text-white uppercase">Edit Product</h3>
                 <p className="text-xs text-neutral-400">Updating SKU: VJ-DROP001-{editingProduct.id}</p>
@@ -494,49 +495,49 @@ export default function AdminProductsPage() {
 
             <form onSubmit={handleSaveEdit} className="space-y-4">
               <div className="space-y-1">
-                <label className="text-[11px] font-mono uppercase text-neutral-300">Garment Title</label>
+                <label className="text-[11px] font-mono uppercase text-[#FFA4A4]">Garment Title</label>
                 <input
                   type="text"
                   required
                   value={formData.title}
                   onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-                  className="w-full bg-slate-800 border border-white/10 rounded-xl px-3 py-2 text-xs text-white"
+                  className="w-full bg-[#1F1417] border border-[#801414]/30 rounded-xl px-3 py-2 text-xs text-white"
                 />
               </div>
 
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-1">
-                  <label className="text-[11px] font-mono uppercase text-neutral-300">Price (INR)</label>
+                  <label className="text-[11px] font-mono uppercase text-[#FFA4A4]">Price (INR)</label>
                   <input
                     type="number"
                     value={formData.price}
                     onChange={(e) => setFormData({ ...formData, price: e.target.value })}
-                    className="w-full bg-slate-800 border border-white/10 rounded-xl px-3 py-2 text-xs text-white"
+                    className="w-full bg-[#1F1417] border border-[#801414]/30 rounded-xl px-3 py-2 text-xs text-white"
                   />
                 </div>
 
                 <div className="space-y-1">
-                  <label className="text-[11px] font-mono uppercase text-neutral-300">Badge</label>
+                  <label className="text-[11px] font-mono uppercase text-[#FFA4A4]">Badge</label>
                   <input
                     type="text"
                     value={formData.badge}
                     onChange={(e) => setFormData({ ...formData, badge: e.target.value })}
-                    className="w-full bg-slate-800 border border-white/10 rounded-xl px-3 py-2 text-xs text-white"
+                    className="w-full bg-[#1F1417] border border-[#801414]/30 rounded-xl px-3 py-2 text-xs text-white"
                   />
                 </div>
               </div>
 
               <div className="space-y-1">
-                <label className="text-[11px] font-mono uppercase text-neutral-300">Description</label>
+                <label className="text-[11px] font-mono uppercase text-[#FFA4A4]">Description</label>
                 <textarea
                   rows={3}
                   value={formData.description}
                   onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-                  className="w-full bg-slate-800 border border-white/10 rounded-xl px-3 py-2 text-xs text-white"
+                  className="w-full bg-[#1F1417] border border-[#801414]/30 rounded-xl px-3 py-2 text-xs text-white"
                 />
               </div>
 
-              <div className="pt-4 border-t border-white/10 flex items-center justify-end gap-3">
+              <div className="pt-4 border-t border-[#801414]/20 flex items-center justify-end gap-3">
                 <button
                   type="button"
                   onClick={() => setEditingProduct(null)}
@@ -546,7 +547,7 @@ export default function AdminProductsPage() {
                 </button>
                 <button
                   type="submit"
-                  className="px-5 py-2 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-black text-xs font-black uppercase tracking-wider"
+                  className="px-5 py-2 rounded-xl bg-gradient-to-r from-[#801414] to-[#C1272D] text-white text-xs font-black uppercase tracking-wider"
                 >
                   Save Changes
                 </button>
@@ -558,12 +559,12 @@ export default function AdminProductsPage() {
 
       {/* DELETE CONFIRMATION MODAL */}
       {deletingProductId !== null && (
-        <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-4">
-          <div className="w-full max-w-md bg-slate-900 border border-rose-500/30 rounded-2xl p-6 space-y-4 animate-in zoom-in-95 duration-200">
-            <div className="flex items-center gap-3 text-rose-400">
+        <div className="fixed inset-0 z-50 bg-black/85 backdrop-blur-md flex items-center justify-center p-4">
+          <div className="w-full max-w-md bg-[#160E10] border border-[#801414]/50 rounded-3xl p-6 space-y-4 animate-in zoom-in-95 duration-200 shadow-2xl">
+            <div className="flex items-center gap-3 text-[#E83D4D]">
               <AlertCircle className="w-6 h-6" />
               <h4 className="font-poppins font-bold text-base uppercase text-white">
-                Delete Product?
+                Delete Garment?
               </h4>
             </div>
             <p className="text-xs text-neutral-300 leading-relaxed">
@@ -572,13 +573,13 @@ export default function AdminProductsPage() {
             <div className="pt-2 flex items-center justify-end gap-3">
               <button
                 onClick={() => setDeletingProductId(null)}
-                className="px-4 py-2 rounded-xl bg-slate-800 text-xs font-bold uppercase text-neutral-300 hover:text-white"
+                className="px-4 py-2 rounded-xl bg-black/60 text-xs font-bold uppercase text-neutral-300 hover:text-white"
               >
                 Cancel
               </button>
               <button
                 onClick={handleConfirmDelete}
-                className="px-4 py-2 rounded-xl bg-rose-600 hover:bg-rose-500 text-white text-xs font-black uppercase tracking-wider"
+                className="px-5 py-2 rounded-xl bg-[#801414] hover:bg-[#991B1B] text-white text-xs font-black uppercase tracking-wider shadow-lg"
               >
                 Confirm Delete
               </button>
