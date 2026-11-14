@@ -20,7 +20,6 @@ import {
   Sparkles,
   ShieldCheck,
   ChevronRight,
-  Flame,
 } from 'lucide-react';
 import { AdminProvider, useAdmin } from '@/context/AdminContext';
 import ValjonsLogo from '@/components/ValjonsLogo';
@@ -46,10 +45,10 @@ function AdminShell({ children }: { children: React.ReactNode }) {
 
   if (!isAdminAuthenticated) {
     return (
-      <div className="min-h-screen bg-[#080607] flex items-center justify-center text-white font-montserrat">
-        <div className="p-8 text-center space-y-4">
-          <div className="w-10 h-10 border-2 border-[#801414] border-t-transparent rounded-full animate-spin mx-auto" />
-          <p className="text-xs uppercase tracking-widest text-neutral-400">Verifying Atelier Credentials...</p>
+      <div className="min-h-screen bg-[#F0F3F8] flex items-center justify-center text-[#111827] font-montserrat">
+        <div className="p-8 text-center space-y-4 neu-flat rounded-3xl border border-white/80">
+          <div className="w-10 h-10 border-3 border-black border-t-transparent rounded-full animate-spin mx-auto" />
+          <p className="text-xs uppercase tracking-widest text-[#64748B] font-bold">Verifying Atelier Credentials...</p>
         </div>
       </div>
     );
@@ -72,7 +71,7 @@ function AdminShell({ children }: { children: React.ReactNode }) {
           href: '/admin/orders',
           icon: PackageCheck,
           badge: stats.pendingOrdersCount > 0 ? `${stats.pendingOrdersCount}` : undefined,
-          badgeColor: 'bg-[#801414]/30 text-[#FFA4A4] border-[#801414]/50',
+          badgeColor: 'bg-black text-white',
         },
         { label: 'Inventory Matrix', href: '/admin/inventory', icon: Layers },
       ],
@@ -86,46 +85,41 @@ function AdminShell({ children }: { children: React.ReactNode }) {
   ];
 
   return (
-    <div className="min-h-screen bg-[#080607] text-white flex flex-col font-montserrat antialiased selection:bg-[#801414] selection:text-white">
-      {/* VALJONS Radiant Ambient Crimson Glow Orbs */}
-      <div className="fixed top-0 left-1/4 w-[500px] h-[500px] bg-[#801414]/20 rounded-full blur-[170px] pointer-events-none -z-10" />
-      <div className="fixed bottom-0 right-1/4 w-[500px] h-[500px] bg-[#991B1B]/15 rounded-full blur-[170px] pointer-events-none -z-10" />
-      <div className="fixed top-1/2 right-1/10 w-80 h-80 bg-[#C1272D]/10 rounded-full blur-[140px] pointer-events-none -z-10" />
-
+    <div className="min-h-screen bg-[#F0F3F8] text-[#111827] flex flex-col font-montserrat antialiased selection:bg-black selection:text-white">
       <div className="flex-1 flex w-full">
-        {/* Desktop Sidebar (Left) */}
-        <aside className="hidden lg:flex w-72 flex-col justify-between bg-[#120B0D]/85 backdrop-blur-2xl border-r border-[#801414]/25 shrink-0 z-30 sticky top-0 h-screen p-5 shadow-[8px_0_32px_rgba(0,0,0,0.5)]">
+        {/* Desktop Neumorphic Sidebar (Left) */}
+        <aside className="hidden lg:flex w-72 flex-col justify-between bg-[#F0F3F8] border-r border-[#E2E8F0]/80 shadow-[6px_0_24px_rgba(209,217,230,0.6)] shrink-0 z-30 sticky top-0 h-screen p-5">
           <div className="space-y-6">
             {/* Atelier Branding */}
-            <div className="flex items-center justify-between pb-4 border-b border-[#801414]/20">
+            <div className="flex items-center justify-between pb-4 border-b border-[#E2E8F0]">
               <Link href="/admin/dashboard" className="flex items-center gap-3 group">
-                <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-[#801414] via-[#520B0B] to-black border border-[#801414]/50 flex items-center justify-center p-1.5 shadow-[0_0_15px_rgba(128,20,20,0.4)] group-hover:border-[#E83D4D] transition-all">
-                  <ValjonsLogo theme="dark" size="sm" showMonogram={true} showWordmark={false} />
+                <div className="w-11 h-11 rounded-2xl neu-flat flex items-center justify-center p-2 border border-white/80 group-hover:shadow-[inset_2px_2px_5px_#d1d9e6,inset_-2px_-2px_5px_#ffffff] transition-all">
+                  <ValjonsLogo theme="light" size="sm" showMonogram={true} showWordmark={false} />
                 </div>
                 <div>
-                  <h1 className="font-poppins font-black text-sm tracking-[0.22em] text-white uppercase group-hover:text-[#FFA4A4] transition-colors">
+                  <h1 className="font-poppins font-black text-sm tracking-[0.22em] text-[#0A0A0A] uppercase transition-colors">
                     VALJONS
                   </h1>
-                  <span className="text-[10px] font-mono tracking-wider text-[#E83D4D] uppercase font-bold flex items-center gap-1">
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#E83D4D] animate-pulse" />
+                  <span className="text-[10px] font-mono tracking-wider text-[#64748B] uppercase font-bold flex items-center gap-1.5">
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
                     Atelier Control v2
                   </span>
                 </div>
               </Link>
 
-              <span className="px-2 py-0.5 rounded-full bg-[#801414]/30 border border-[#801414]/60 text-[#FFA4A4] text-[9px] font-mono font-bold uppercase shadow-xs">
+              <span className="px-2.5 py-1 rounded-full neu-flat-sm text-[#0A0A0A] text-[9px] font-mono font-bold uppercase border border-white/80">
                 Live
               </span>
             </div>
 
             {/* Navigation Menus */}
-            <div className="space-y-5">
+            <div className="space-y-6">
               {navItems.map((group, gIdx) => (
-                <div key={gIdx} className="space-y-1">
-                  <p className="text-[10px] font-mono font-bold tracking-[0.2em] text-[#A87178] px-3 uppercase">
+                <div key={gIdx} className="space-y-1.5">
+                  <p className="text-[10px] font-mono font-bold tracking-[0.2em] text-[#94A3B8] px-3 uppercase">
                     {group.group}
                   </p>
-                  <div className="space-y-1 pt-1">
+                  <div className="space-y-1.5 pt-1">
                     {group.items.map((item) => {
                       const isActive = pathname === item.href;
                       const Icon = item.icon;
@@ -133,16 +127,16 @@ function AdminShell({ children }: { children: React.ReactNode }) {
                         <Link
                           key={item.href}
                           href={item.href}
-                          className={`flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-semibold tracking-wider uppercase transition-all duration-200 group ${
+                          className={`flex items-center justify-between px-3.5 py-2.5 rounded-2xl text-xs font-bold tracking-wider uppercase transition-all duration-200 group ${
                             isActive
-                              ? 'bg-gradient-to-r from-[#801414]/50 via-[#801414]/25 to-transparent text-white border-l-2 border-[#E83D4D] shadow-[0_0_20px_rgba(128,20,20,0.35)]'
-                              : 'text-neutral-400 hover:text-white hover:bg-white/5 border border-transparent'
+                              ? 'neu-btn-dark bg-[#0A0A0A] text-white shadow-[4px_4px_12px_rgba(10,10,10,0.25)]'
+                              : 'text-[#475569] hover:text-[#0A0A0A] neu-flat-sm hover:neu-flat border border-white/60'
                           }`}
                         >
                           <div className="flex items-center gap-3">
                             <Icon
                               className={`w-4 h-4 transition-transform group-hover:scale-110 ${
-                                isActive ? 'text-[#E83D4D]' : 'text-neutral-400 group-hover:text-white'
+                                isActive ? 'text-white' : 'text-[#64748B] group-hover:text-black'
                               }`}
                             />
                             <span>{item.label}</span>
@@ -150,8 +144,10 @@ function AdminShell({ children }: { children: React.ReactNode }) {
 
                           {item.badge && (
                             <span
-                              className={`text-[9px] font-mono font-bold px-2 py-0.5 rounded-full border ${
-                                item.badgeColor || 'bg-white/10 text-white/80 border-white/10'
+                              className={`text-[9px] font-mono font-bold px-2 py-0.5 rounded-full ${
+                                isActive
+                                  ? 'bg-white/20 text-white'
+                                  : 'neu-inset text-black border border-white/40'
                               }`}
                             >
                               {item.badge}
@@ -167,65 +163,65 @@ function AdminShell({ children }: { children: React.ReactNode }) {
           </div>
 
           {/* Footer User & Store Link */}
-          <div className="pt-4 border-t border-[#801414]/20 space-y-3">
+          <div className="pt-4 border-t border-[#E2E8F0] space-y-3">
             <Link
               href="/"
               target="_blank"
-              className="flex items-center justify-between px-3 py-2 rounded-xl text-xs font-semibold text-neutral-400 hover:text-white hover:bg-white/5 transition-colors group border border-white/5"
+              className="flex items-center justify-between px-3.5 py-2.5 rounded-2xl text-xs font-bold text-[#475569] hover:text-black neu-flat-sm hover:neu-flat transition-all group border border-white/60"
             >
               <div className="flex items-center gap-2">
-                <ExternalLink className="w-3.5 h-3.5 text-neutral-400 group-hover:text-[#E83D4D]" />
+                <ExternalLink className="w-3.5 h-3.5 text-[#64748B] group-hover:text-black" />
                 <span>Public Atelier Store</span>
               </div>
               <ChevronRight className="w-3.5 h-3.5 opacity-50 group-hover:translate-x-1 transition-transform" />
             </Link>
 
             {/* Admin Profile */}
-            <div className="flex items-center justify-between p-2.5 rounded-xl bg-gradient-to-r from-[#801414]/20 to-transparent border border-[#801414]/30">
+            <div className="flex items-center justify-between p-2.5 rounded-2xl neu-flat border border-white/80">
               <div className="flex items-center gap-2.5">
-                <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-[#801414] to-[#C1272D] flex items-center justify-center font-bold text-xs text-white uppercase shadow-[0_0_12px_rgba(128,20,20,0.6)]">
+                <div className="w-9 h-9 rounded-xl bg-[#0A0A0A] text-white flex items-center justify-center font-bold text-xs uppercase shadow-md">
                   AM
                 </div>
                 <div className="leading-tight">
-                  <p className="text-xs font-bold text-white truncate max-w-[110px]">{adminUser.name}</p>
-                  <p className="text-[10px] text-[#FFA4A4] font-mono">{adminUser.role}</p>
+                  <p className="text-xs font-bold text-[#0A0A0A] truncate max-w-[110px]">{adminUser.name}</p>
+                  <p className="text-[10px] text-[#64748B] font-mono font-medium">{adminUser.role}</p>
                 </div>
               </div>
 
               <button
                 onClick={logoutAdmin}
                 title="Log Out of Admin"
-                className="p-1.5 rounded-lg text-neutral-400 hover:text-rose-400 hover:bg-rose-500/10 transition-colors cursor-pointer"
+                className="p-2 rounded-xl neu-btn text-[#64748B] hover:text-rose-600 transition-colors cursor-pointer"
               >
-                <LogOut className="w-4 h-4" />
+                <LogOut className="w-3.5 h-3.5" />
               </button>
             </div>
           </div>
         </aside>
 
-        {/* Mobile Header Bar & Drawer */}
+        {/* Header Bar & Content Area */}
         <div className="flex-1 flex flex-col min-w-0">
-          <header className="sticky top-0 z-20 w-full bg-[#120B0D]/85 backdrop-blur-xl border-b border-[#801414]/20 px-4 sm:px-8 py-3.5 flex items-center justify-between gap-4 shadow-md">
+          <header className="sticky top-0 z-20 w-full bg-[#F0F3F8]/90 backdrop-blur-xl border-b border-[#E2E8F0] px-4 sm:px-8 py-3.5 flex items-center justify-between gap-4 shadow-[0_4px_16px_rgba(209,217,230,0.4)]">
             <div className="flex items-center gap-3">
               <button
                 onClick={() => setIsMobileNavOpen(!isMobileNavOpen)}
-                className="p-2 -ml-2 rounded-lg text-neutral-300 hover:text-white hover:bg-white/5 lg:hidden cursor-pointer"
+                className="p-2.5 rounded-2xl neu-btn text-[#0A0A0A] lg:hidden cursor-pointer"
                 aria-label="Toggle mobile admin menu"
               >
-                {isMobileNavOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+                {isMobileNavOpen ? <X className="w-4 h-4" /> : <Menu className="w-4 h-4" />}
               </button>
 
-              {/* Global Search Bar */}
+              {/* Global Search Bar (Neumorphic Inset) */}
               <div className="relative max-w-md w-48 sm:w-80">
-                <Search className="w-3.5 h-3.5 text-[#A87178] absolute left-3 top-1/2 -translate-y-1/2" />
+                <Search className="w-3.5 h-3.5 text-[#94A3B8] absolute left-3.5 top-1/2 -translate-y-1/2" />
                 <input
                   type="text"
                   placeholder="Search orders, garments, members..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full bg-[#1A1013]/90 border border-[#801414]/30 rounded-xl pl-9 pr-12 py-1.5 text-xs text-white placeholder-neutral-500 focus:outline-none focus:border-[#E83D4D] focus:ring-1 focus:ring-[#E83D4D] transition-all font-montserrat"
+                  className="w-full neu-inset rounded-2xl pl-10 pr-12 py-2 text-xs text-[#0A0A0A] placeholder-[#94A3B8] border border-white/50 focus:outline-none focus:ring-2 focus:ring-black/10 transition-all font-montserrat"
                 />
-                <span className="hidden sm:inline-block absolute right-2.5 top-1/2 -translate-y-1/2 px-1.5 py-0.5 rounded bg-white/10 text-[9px] font-mono text-neutral-400">
+                <span className="hidden sm:inline-block absolute right-2.5 top-1/2 -translate-y-1/2 px-1.5 py-0.5 rounded-lg neu-flat-sm text-[9px] font-mono font-bold text-[#64748B] border border-white/80">
                   ⌘K
                 </span>
               </div>
@@ -235,7 +231,7 @@ function AdminShell({ children }: { children: React.ReactNode }) {
             <div className="flex items-center gap-2 sm:gap-3">
               <Link
                 href="/admin/products?action=new"
-                className="px-3.5 sm:px-4 py-2 rounded-xl bg-gradient-to-r from-[#801414] via-[#991B1B] to-[#C1272D] hover:from-[#991B1B] hover:to-[#E83D4D] text-white text-xs font-bold uppercase tracking-wider transition-all shadow-[0_0_20px_rgba(128,20,20,0.45)] flex items-center gap-1.5 cursor-pointer active:scale-95"
+                className="px-4 py-2.5 rounded-2xl neu-btn-dark bg-[#0A0A0A] hover:bg-black text-white text-xs font-bold uppercase tracking-wider transition-all flex items-center gap-1.5 cursor-pointer active:scale-95"
               >
                 <Plus className="w-3.5 h-3.5 stroke-[3]" />
                 <span className="hidden sm:inline">Add Garment</span>
@@ -244,12 +240,12 @@ function AdminShell({ children }: { children: React.ReactNode }) {
               <div className="relative">
                 <button
                   aria-label="Notifications"
-                  className="p-2 rounded-xl bg-[#1A1013]/90 border border-[#801414]/30 text-neutral-300 hover:text-white transition-colors cursor-pointer"
+                  className="p-2.5 rounded-2xl neu-btn border border-white/80 text-[#0A0A0A] hover:text-black transition-colors cursor-pointer"
                 >
                   <Bell className="w-4 h-4" />
                 </button>
                 {stats.pendingOrdersCount > 0 && (
-                  <span className="absolute -top-1 -right-1 w-2.5 h-2.5 bg-[#E83D4D] rounded-full ring-2 ring-[#080607] animate-pulse" />
+                  <span className="absolute -top-1 -right-1 w-2.5 h-2.5 bg-rose-500 rounded-full ring-2 ring-[#F0F3F8] animate-pulse" />
                 )}
               </div>
             </div>
@@ -257,79 +253,85 @@ function AdminShell({ children }: { children: React.ReactNode }) {
 
           {/* Mobile Drawer Navigation */}
           {isMobileNavOpen && (
-            <div className="lg:hidden fixed inset-0 z-40 bg-black/85 backdrop-blur-md flex flex-col p-6 animate-in fade-in duration-200">
-              <div className="flex items-center justify-between pb-4 border-b border-[#801414]/30">
-                <div className="flex items-center gap-2.5">
-                  <div className="w-8 h-8 rounded-lg bg-black border border-[#801414]/50 flex items-center justify-center p-1">
-                    <ValjonsLogo theme="dark" size="sm" showMonogram={true} showWordmark={false} />
-                  </div>
-                  <span className="font-poppins font-black text-sm text-white">VALJONS ATELIER</span>
-                </div>
-                <button
-                  onClick={() => setIsMobileNavOpen(false)}
-                  className="p-2 text-white"
-                >
-                  <X className="w-5 h-5" />
-                </button>
-              </div>
-
-              <div className="space-y-4 py-6 flex-1 overflow-y-auto">
-                {navItems.map((group, idx) => (
-                  <div key={idx} className="space-y-1">
-                    <p className="text-[10px] font-mono font-bold text-[#A87178] px-2 uppercase">
-                      {group.group}
-                    </p>
-                    <div className="space-y-1 pt-1">
-                      {group.items.map((item) => (
-                        <Link
-                          key={item.href}
-                          href={item.href}
-                          onClick={() => setIsMobileNavOpen(false)}
-                          className={`flex items-center justify-between px-3 py-2.5 rounded-xl text-xs font-bold uppercase ${
-                            pathname === item.href
-                              ? 'bg-[#801414]/40 text-white border-l-2 border-[#E83D4D]'
-                              : 'text-neutral-300 hover:bg-white/5'
-                          }`}
-                        >
-                          <div className="flex items-center gap-3">
-                            <item.icon className="w-4 h-4 text-[#E83D4D]" />
-                            <span>{item.label}</span>
-                          </div>
-                          {item.badge && (
-                            <span className="text-[9px] font-mono px-2 py-0.5 rounded-full bg-white/10 text-white">
-                              {item.badge}
-                            </span>
-                          )}
-                        </Link>
-                      ))}
+            <div className="lg:hidden fixed inset-0 z-40 bg-black/40 backdrop-blur-md flex flex-col p-6 animate-in fade-in duration-200">
+              <div className="w-full max-w-xs bg-[#F0F3F8] rounded-3xl p-6 neu-flat shadow-2xl h-full flex flex-col justify-between">
+                <div>
+                  <div className="flex items-center justify-between pb-4 border-b border-[#E2E8F0]">
+                    <div className="flex items-center gap-2.5">
+                      <div className="w-9 h-9 rounded-2xl neu-flat flex items-center justify-center p-1.5 border border-white/80">
+                        <ValjonsLogo theme="light" size="sm" showMonogram={true} showWordmark={false} />
+                      </div>
+                      <span className="font-poppins font-black text-sm text-[#0A0A0A]">VALJONS ATELIER</span>
                     </div>
+                    <button
+                      onClick={() => setIsMobileNavOpen(false)}
+                      className="p-2 rounded-xl neu-btn text-black cursor-pointer"
+                    >
+                      <X className="w-4 h-4" />
+                    </button>
                   </div>
-                ))}
-              </div>
 
-              <div className="pt-4 border-t border-[#801414]/30 flex items-center justify-between">
-                <Link
-                  href="/"
-                  target="_blank"
-                  className="text-xs font-bold uppercase text-[#FFA4A4] flex items-center gap-1.5"
-                >
-                  <ExternalLink className="w-4 h-4" />
-                  <span>Public Store</span>
-                </Link>
+                  <div className="space-y-4 py-6 overflow-y-auto">
+                    {navItems.map((group, idx) => (
+                      <div key={idx} className="space-y-1">
+                        <p className="text-[10px] font-mono font-bold text-[#94A3B8] px-2 uppercase">
+                          {group.group}
+                        </p>
+                        <div className="space-y-1.5 pt-1">
+                          {group.items.map((item) => (
+                            <Link
+                              key={item.href}
+                              href={item.href}
+                              onClick={() => setIsMobileNavOpen(false)}
+                              className={`flex items-center justify-between px-3.5 py-2.5 rounded-2xl text-xs font-bold uppercase ${
+                                pathname === item.href
+                                  ? 'neu-btn-dark bg-[#0A0A0A] text-white'
+                                  : 'text-[#475569] neu-flat-sm'
+                              }`}
+                            >
+                              <div className="flex items-center gap-3">
+                                <item.icon className="w-4 h-4" />
+                                <span>{item.label}</span>
+                              </div>
+                              {item.badge && (
+                                <span className="text-[9px] font-mono font-bold px-2 py-0.5 rounded-full bg-white/20 text-white">
+                                  {item.badge}
+                                </span>
+                              )}
+                            </Link>
+                          ))}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
 
-                <button
-                  onClick={logoutAdmin}
-                  className="text-xs font-bold uppercase text-rose-400 flex items-center gap-1.5 cursor-pointer"
-                >
-                  <LogOut className="w-4 h-4" />
-                  <span>Logout</span>
-                </button>
+                <div className="pt-4 border-t border-[#E2E8F0] flex items-center justify-between">
+                  <Link
+                    href="/"
+                    target="_blank"
+                    className="text-xs font-bold uppercase text-[#0A0A0A] flex items-center gap-1.5"
+                  >
+                    <ExternalLink className="w-4 h-4" />
+                    <span>Public Store</span>
+                  </Link>
+
+                  <button
+                    onClick={logoutAdmin}
+                    className="text-xs font-bold uppercase text-rose-600 flex items-center gap-1.5"
+                  >
+                    <LogOut className="w-4 h-4" />
+                    <span>Exit</span>
+                  </button>
+                </div>
               </div>
             </div>
           )}
 
-          {/* Main Dynamic View Area */}
-          <main className="flex-1 p-4 sm:p-8 max-w-7xl w-full mx-auto">{children}</main>
+          {/* Main Dynamic Viewport */}
+          <main className="flex-1 p-4 sm:p-8 max-w-7xl w-full mx-auto animate-fade-in">
+            {children}
+          </main>
         </div>
       </div>
     </div>

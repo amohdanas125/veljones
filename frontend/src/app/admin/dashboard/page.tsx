@@ -12,10 +12,10 @@ import {
   Truck,
   Plus,
   Sparkles,
-  Flame,
   CheckCircle2,
   Calendar,
   Layers,
+  ChevronRight,
 } from 'lucide-react';
 import { useAdmin } from '@/context/AdminContext';
 
@@ -60,21 +60,18 @@ export default function AdminDashboardPage() {
 
   return (
     <div className="space-y-8 font-montserrat">
-      {/* 1. Hero Atelier Welcome Banner in VALJONS Crimson */}
-      <div className="relative overflow-hidden p-6 sm:p-8 rounded-3xl bg-gradient-to-r from-[#1E0B0F]/95 via-[#2A0E14]/85 to-[#150A0C]/95 border border-[#801414]/40 shadow-[0_8px_32px_rgba(128,20,20,0.3)]">
-        <div className="absolute top-0 right-0 w-80 h-80 bg-[#801414]/30 rounded-full blur-[100px] pointer-events-none" />
-        <div className="absolute -bottom-10 -left-10 w-60 h-60 bg-[#B91C1C]/20 rounded-full blur-[90px] pointer-events-none" />
-
-        <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
+      {/* 1. Hero Atelier Welcome Banner in Neumorphic White & Black */}
+      <div className="neu-flat rounded-3xl p-6 sm:p-8 border border-white/80">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
           <div className="space-y-2">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#801414]/30 border border-[#801414]/60 text-[#FFA4A4] text-[10px] font-mono font-bold uppercase tracking-[0.2em] shadow-xs">
-              <Sparkles className="w-3.5 h-3.5 text-[#E83D4D]" />
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full neu-inset text-[#0A0A0A] text-[10px] font-mono font-bold uppercase tracking-[0.2em] border border-white/60">
+              <Sparkles className="w-3.5 h-3.5 text-black" />
               <span>VALJONS ATELIER · DROP 001 PERFORMANCE</span>
             </div>
-            <h2 className="text-2xl sm:text-4xl font-black font-poppins uppercase tracking-tight text-white">
-              Executive Overview · <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-[#FFA4A4] to-[#E83D4D]">{adminUser.name}</span>
+            <h2 className="text-2xl sm:text-4xl font-black font-poppins uppercase tracking-tight text-[#0A0A0A]">
+              Executive Overview · <span>{adminUser.name}</span>
             </h2>
-            <p className="text-xs sm:text-sm text-neutral-300 max-w-xl leading-relaxed">
+            <p className="text-xs sm:text-sm text-[#64748B] max-w-xl leading-relaxed">
               Real-time monitoring of 280 GSM PC fleece demand, logistics fulfillment, and national revenue pipelines.
             </p>
           </div>
@@ -82,15 +79,15 @@ export default function AdminDashboardPage() {
           <div className="flex items-center gap-3 shrink-0">
             <Link
               href="/admin/orders"
-              className="px-4 py-2.5 rounded-xl bg-black/60 hover:bg-black text-white border border-[#801414]/40 text-xs font-bold uppercase tracking-wider transition-all shadow-md flex items-center gap-2 cursor-pointer"
+              className="px-4 py-2.5 rounded-2xl neu-btn text-[#0A0A0A] hover:text-black border border-white/80 text-xs font-bold uppercase tracking-wider transition-all flex items-center gap-2 cursor-pointer"
             >
-              <Truck className="w-4 h-4 text-[#FFA4A4]" />
+              <Truck className="w-4 h-4 text-[#0A0A0A]" />
               <span>Dispatch Pipeline</span>
             </Link>
 
             <Link
               href="/admin/products?action=new"
-              className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-[#801414] via-[#991B1B] to-[#C1272D] hover:from-[#991B1B] hover:to-[#E83D4D] text-white text-xs font-black uppercase tracking-wider transition-all shadow-[0_0_20px_rgba(128,20,20,0.6)] flex items-center gap-1.5 cursor-pointer active:scale-95"
+              className="px-5 py-2.5 rounded-2xl neu-btn-dark bg-[#0A0A0A] hover:bg-black text-white text-xs font-black uppercase tracking-wider transition-all flex items-center gap-1.5 cursor-pointer active:scale-95"
             >
               <Plus className="w-4 h-4 stroke-[3]" />
               <span>Add Garment</span>
@@ -99,144 +96,141 @@ export default function AdminDashboardPage() {
         </div>
       </div>
 
-      {/* 2. Top Analytics Metric Cards in Rich Crimson Glass */}
+      {/* 2. Top 4 High-Contrast KPI Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
-        {/* Card 1: Gross Sales */}
-        <div className="p-6 rounded-2xl bg-[#140D0F]/90 backdrop-blur-xl border border-[#801414]/30 hover:border-[#E83D4D]/70 transition-all duration-300 shadow-[0_4px_24px_rgba(0,0,0,0.5)] relative overflow-hidden group">
-          <div className="absolute top-0 right-0 w-28 h-28 bg-[#801414]/20 rounded-full blur-2xl group-hover:bg-[#801414]/35 transition-all" />
-          <div className="flex items-center justify-between text-neutral-400 mb-3">
-            <span className="text-[11px] font-mono font-bold uppercase tracking-wider text-[#A87178]">Total Sales (INR)</span>
-            <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-[#801414] to-[#C1272D] text-white flex items-center justify-center shadow-[0_0_12px_rgba(128,20,20,0.6)]">
+        {/* Total Sales */}
+        <div className="neu-flat rounded-3xl p-6 border border-white/80 space-y-4 transition-all hover:scale-[1.01]">
+          <div className="flex items-center justify-between">
+            <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-[#64748B]">
+              Total Sales (INR)
+            </span>
+            <div className="w-9 h-9 rounded-2xl neu-flat flex items-center justify-center text-[#0A0A0A] border border-white/80">
               <TrendingUp className="w-4 h-4" />
             </div>
           </div>
-          <div className="space-y-1">
-            <h3 className="text-2xl sm:text-3xl font-black font-poppins text-white tracking-tight">
+          <div>
+            <h3 className="text-2xl sm:text-3xl font-black font-poppins text-[#0A0A0A]">
               ₹{stats.totalRevenue.toLocaleString('en-IN')}
             </h3>
-            <div className="flex items-center gap-1.5 text-xs text-[#FFA4A4] font-bold">
-              <ArrowUpRight className="w-3.5 h-3.5 text-[#E83D4D]" />
-              <span>+18.4%</span>
-              <span className="text-neutral-400 font-normal">vs last week</span>
-            </div>
+            <p className="text-xs font-bold text-emerald-600 mt-1 flex items-center gap-1">
+              <ArrowUpRight className="w-3.5 h-3.5" /> +18.4% vs last week
+            </p>
           </div>
         </div>
 
-        {/* Card 2: Orders Processed */}
-        <div className="p-6 rounded-2xl bg-[#140D0F]/90 backdrop-blur-xl border border-[#801414]/30 hover:border-[#E83D4D]/70 transition-all duration-300 shadow-[0_4px_24px_rgba(0,0,0,0.5)] relative overflow-hidden group">
-          <div className="absolute top-0 right-0 w-28 h-28 bg-[#991B1B]/20 rounded-full blur-2xl group-hover:bg-[#991B1B]/35 transition-all" />
-          <div className="flex items-center justify-between text-neutral-400 mb-3">
-            <span className="text-[11px] font-mono font-bold uppercase tracking-wider text-[#A87178]">Orders Processed</span>
-            <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-[#991B1B] to-[#F59E0B] text-white flex items-center justify-center shadow-[0_0_12px_rgba(153,27,27,0.6)]">
+        {/* Orders Processed */}
+        <div className="neu-flat rounded-3xl p-6 border border-white/80 space-y-4 transition-all hover:scale-[1.01]">
+          <div className="flex items-center justify-between">
+            <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-[#64748B]">
+              Orders Processed
+            </span>
+            <div className="w-9 h-9 rounded-2xl neu-flat flex items-center justify-center text-[#0A0A0A] border border-white/80">
               <PackageCheck className="w-4 h-4" />
             </div>
           </div>
-          <div className="space-y-1">
-            <h3 className="text-2xl sm:text-3xl font-black font-poppins text-white tracking-tight">
+          <div>
+            <h3 className="text-2xl sm:text-3xl font-black font-poppins text-[#0A0A0A]">
               {stats.totalOrders}
             </h3>
-            <div className="flex items-center gap-1.5 text-xs text-amber-300 font-bold">
-              <span>{stats.pendingOrdersCount} Awaiting Dispatch</span>
-            </div>
+            <p className="text-xs font-medium text-[#64748B] mt-1">
+              {stats.pendingOrdersCount} Awaiting Dispatch
+            </p>
           </div>
         </div>
 
-        {/* Card 3: Average Order Value */}
-        <div className="p-6 rounded-2xl bg-[#140D0F]/90 backdrop-blur-xl border border-[#801414]/30 hover:border-[#E83D4D]/70 transition-all duration-300 shadow-[0_4px_24px_rgba(0,0,0,0.5)] relative overflow-hidden group">
-          <div className="absolute top-0 right-0 w-28 h-28 bg-[#801414]/20 rounded-full blur-2xl group-hover:bg-[#801414]/35 transition-all" />
-          <div className="flex items-center justify-between text-neutral-400 mb-3">
-            <span className="text-[11px] font-mono font-bold uppercase tracking-wider text-[#A87178]">Average Order Value</span>
-            <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-[#801414] to-[#E83D4D] text-white flex items-center justify-center shadow-[0_0_12px_rgba(128,20,20,0.6)]">
+        {/* Average Order Value */}
+        <div className="neu-flat rounded-3xl p-6 border border-white/80 space-y-4 transition-all hover:scale-[1.01]">
+          <div className="flex items-center justify-between">
+            <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-[#64748B]">
+              Average Order Value
+            </span>
+            <div className="w-9 h-9 rounded-2xl neu-flat flex items-center justify-center text-[#0A0A0A] border border-white/80">
               <CreditCard className="w-4 h-4" />
             </div>
           </div>
-          <div className="space-y-1">
-            <h3 className="text-2xl sm:text-3xl font-black font-poppins text-white tracking-tight">
+          <div>
+            <h3 className="text-2xl sm:text-3xl font-black font-poppins text-[#0A0A0A]">
               ₹{stats.aov.toLocaleString('en-IN')}
             </h3>
-            <div className="flex items-center gap-1.5 text-xs text-neutral-300">
-              <span className="text-[#FFA4A4] font-bold">₹2,499</span>
-              <span>Drop 001 Anchor</span>
-            </div>
+            <p className="text-xs font-medium text-[#64748B] mt-1">
+              ₹2,499 Drop 001 Anchor
+            </p>
           </div>
         </div>
 
-        {/* Card 4: Store Conversion */}
-        <div className="p-6 rounded-2xl bg-[#140D0F]/90 backdrop-blur-xl border border-[#801414]/30 hover:border-[#E83D4D]/70 transition-all duration-300 shadow-[0_4px_24px_rgba(0,0,0,0.5)] relative overflow-hidden group">
-          <div className="absolute top-0 right-0 w-28 h-28 bg-[#C1272D]/20 rounded-full blur-2xl group-hover:bg-[#C1272D]/35 transition-all" />
-          <div className="flex items-center justify-between text-neutral-400 mb-3">
-            <span className="text-[11px] font-mono font-bold uppercase tracking-wider text-[#A87178]">Conversion Rate</span>
-            <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-[#C1272D] to-[#FFA4A4] text-black flex items-center justify-center shadow-[0_0_12px_rgba(193,39,45,0.6)]">
+        {/* Conversion Rate */}
+        <div className="neu-flat rounded-3xl p-6 border border-white/80 space-y-4 transition-all hover:scale-[1.01]">
+          <div className="flex items-center justify-between">
+            <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-[#64748B]">
+              Conversion Rate
+            </span>
+            <div className="w-9 h-9 rounded-2xl neu-flat flex items-center justify-center text-[#0A0A0A] border border-white/80">
               <ShoppingBag className="w-4 h-4" />
             </div>
           </div>
-          <div className="space-y-1">
-            <h3 className="text-2xl sm:text-3xl font-black font-poppins text-white tracking-tight">
-              {stats.conversionRate}
+          <div>
+            <h3 className="text-2xl sm:text-3xl font-black font-poppins text-[#0A0A0A]">
+              3.8%
             </h3>
-            <div className="flex items-center gap-1.5 text-xs text-emerald-400 font-bold">
-              <ArrowUpRight className="w-3.5 h-3.5" />
-              <span>+0.6%</span>
-              <span className="text-neutral-400 font-normal">organic search</span>
-            </div>
+            <p className="text-xs font-bold text-emerald-600 mt-1 flex items-center gap-1">
+              <ArrowUpRight className="w-3.5 h-3.5" /> +0.6% organic search
+            </p>
           </div>
         </div>
       </div>
 
-      {/* 3. Main Chart & Payment Channel Split */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
-        {/* Left: Revenue Trend Chart in Glowing Crimson (8 Cols) */}
-        <div className="lg:col-span-8 p-6 sm:p-7 rounded-3xl bg-[#140D0F]/90 backdrop-blur-xl border border-[#801414]/30 shadow-2xl flex flex-col justify-between space-y-6">
+      {/* 3. Charts & Analytics Grid */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        {/* Neumorphic Revenue Chart (2 cols) */}
+        <div className="lg:col-span-2 neu-flat rounded-3xl p-6 sm:p-7 border border-white/80 space-y-6">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div>
-              <div className="flex items-center gap-2">
-                <span className="text-[11px] font-mono font-bold uppercase tracking-wider text-[#FFA4A4]">
-                  ATELIER VELOCITY
-                </span>
-              </div>
-              <h4 className="text-lg font-black font-poppins uppercase tracking-tight text-white mt-0.5">
+              <span className="text-[10px] font-mono font-bold uppercase tracking-[0.2em] text-[#64748B]">
+                ATELIER VELOCITY
+              </span>
+              <h4 className="text-lg font-black font-poppins uppercase tracking-tight text-[#0A0A0A]">
                 Revenue Trajectory
               </h4>
             </div>
 
-            {/* Time Filter Tabs */}
-            <div className="flex items-center p-1 rounded-xl bg-black/60 border border-[#801414]/30 text-xs font-mono">
-              {(['7d', '30d', '6m', '1y'] as const).map((r) => (
+            {/* Timeframe selector */}
+            <div className="flex items-center gap-1 p-1 rounded-2xl neu-inset border border-white/50">
+              {(['7d', '30d', '6m', '1y'] as const).map((range) => (
                 <button
-                  key={r}
-                  onClick={() => setTimeRange(r)}
-                  className={`px-3 py-1 rounded-lg uppercase transition-all cursor-pointer ${
-                    timeRange === r
-                      ? 'bg-gradient-to-r from-[#801414] to-[#C1272D] text-white font-bold shadow-[0_0_10px_rgba(128,20,20,0.6)]'
-                      : 'text-neutral-400 hover:text-white'
+                  key={range}
+                  onClick={() => setTimeRange(range)}
+                  className={`px-3 py-1 rounded-xl text-[10px] font-mono font-bold uppercase transition-all cursor-pointer ${
+                    timeRange === range
+                      ? 'neu-btn-dark bg-[#0A0A0A] text-white shadow-sm'
+                      : 'text-[#64748B] hover:text-[#0A0A0A]'
                   }`}
                 >
-                  {r}
+                  {range.toUpperCase()}
                 </button>
               ))}
             </div>
           </div>
 
-          {/* Dynamic SVG Area Chart with Crimson Glow */}
-          <div className="w-full h-56 relative flex items-end justify-between gap-3 pt-6 border-b border-[#801414]/20">
+          {/* Neumorphic Chart Area */}
+          <div className="w-full h-56 relative flex items-end justify-between gap-4 pt-6 border-b border-[#E2E8F0]">
             {activePoints.map((point, pIdx) => {
-              const heightPercent = Math.max(15, Math.round((point.revenue / maxRevenue) * 100));
+              const heightPercent = Math.max(16, Math.round((point.revenue / maxRevenue) * 100));
               return (
                 <div key={pIdx} className="flex-1 flex flex-col items-center gap-2 h-full justify-end group">
                   {/* Tooltip on hover */}
-                  <div className="opacity-0 group-hover:opacity-100 transition-opacity absolute -top-2 bg-[#200E12] text-white border border-[#801414]/60 text-[10px] font-mono py-1 px-2.5 rounded-lg shadow-xl pointer-events-none whitespace-nowrap z-20">
+                  <div className="opacity-0 group-hover:opacity-100 transition-opacity absolute -top-2 bg-[#0A0A0A] text-white text-[10px] font-mono py-1 px-2.5 rounded-xl shadow-xl pointer-events-none whitespace-nowrap z-20">
                     ₹{point.revenue.toLocaleString('en-IN')} · {point.orders} orders
                   </div>
 
-                  {/* Bar with VALJONS Crimson Gradient */}
+                  {/* Neumorphic Bar */}
                   <div
                     style={{ height: `${heightPercent}%` }}
-                    className="w-full max-w-[48px] rounded-t-xl bg-gradient-to-t from-[#801414]/30 via-[#B91C1C]/70 to-[#FF4D5E] group-hover:to-white transition-all duration-300 relative shadow-[0_0_15px_rgba(185,28,28,0.4)]"
+                    className="w-full max-w-[48px] rounded-2xl bg-[#0A0A0A] group-hover:bg-black transition-all duration-300 relative shadow-[4px_4px_10px_rgba(10,10,10,0.2),-2px_-2px_6px_rgba(255,255,255,0.8)]"
                   >
-                    <div className="w-full h-1 bg-[#FFA4A4] rounded-t-xl shadow-[0_0_12px_rgba(255,164,164,0.9)]" />
+                    <div className="w-full h-1.5 bg-white/40 rounded-t-2xl" />
                   </div>
 
-                  <span className="text-[10px] font-mono text-[#A87178] uppercase tracking-wider">
+                  <span className="text-[10px] font-mono text-[#64748B] font-bold uppercase tracking-wider">
                     {point.label}
                   </span>
                 </div>
@@ -245,22 +239,22 @@ export default function AdminDashboardPage() {
           </div>
 
           {/* Bottom stats summary */}
-          <div className="flex items-center justify-between text-xs text-neutral-400 pt-2">
-            <span>Peak Day Revenue: <strong className="text-white">₹{maxRevenue.toLocaleString('en-IN')}</strong></span>
-            <span className="text-[#FFA4A4] font-bold">100% Hand-Inspected Quality</span>
+          <div className="flex items-center justify-between text-xs text-[#64748B] pt-2">
+            <span>Peak Day Revenue: <strong className="text-[#0A0A0A]">₹{maxRevenue.toLocaleString('en-IN')}</strong></span>
+            <span className="text-[#0A0A0A] font-bold">100% Hand-Inspected Quality</span>
           </div>
         </div>
 
-        {/* Right: Payment Method & Channel Split (4 Cols) */}
-        <div className="lg:col-span-4 p-6 sm:p-7 rounded-3xl bg-[#140D0F]/90 backdrop-blur-xl border border-[#801414]/30 shadow-2xl flex flex-col justify-between space-y-6">
+        {/* Payment Channels Matrix (1 col) */}
+        <div className="neu-flat rounded-3xl p-6 sm:p-7 border border-white/80 space-y-6 flex flex-col justify-between">
           <div>
-            <span className="text-[11px] font-mono font-bold uppercase tracking-wider text-[#FFA4A4]">
+            <span className="text-[10px] font-mono font-bold uppercase tracking-[0.2em] text-[#64748B]">
               SETTLEMENT MATRIX
             </span>
-            <h4 className="text-lg font-black font-poppins uppercase tracking-tight text-white mt-0.5">
+            <h4 className="text-lg font-black font-poppins uppercase tracking-tight text-[#0A0A0A]">
               Payment Channels
             </h4>
-            <p className="text-xs text-neutral-400 mt-1">
+            <p className="text-xs text-[#64748B] mt-1">
               Live settlement verification across COD and Instant UPI gateways.
             </p>
           </div>
@@ -268,87 +262,84 @@ export default function AdminDashboardPage() {
           <div className="space-y-4">
             {/* COD */}
             <div className="space-y-1.5">
-              <div className="flex justify-between text-xs font-semibold">
-                <span className="text-white flex items-center gap-2">
-                  <span className="w-2.5 h-2.5 rounded-full bg-amber-400 shadow-[0_0_8px_rgba(251,191,36,0.8)]" />
-                  Cash on Delivery (COD)
+              <div className="flex items-center justify-between text-xs font-semibold">
+                <span className="flex items-center gap-1.5 text-[#0A0A0A]">
+                  <span className="w-2 h-2 rounded-full bg-amber-500" /> Cash on Delivery (COD)
                 </span>
-                <span className="font-mono text-neutral-300">{stats.paymentSplit.cod} orders</span>
+                <span className="font-mono text-[#64748B]">{stats.paymentSplit.cod} orders</span>
               </div>
-              <div className="w-full h-2 rounded-full bg-black/60 overflow-hidden">
+              <div className="w-full h-3 rounded-full neu-inset overflow-hidden p-0.5 border border-white/40">
                 <div
                   style={{
                     width: `${Math.round((stats.paymentSplit.cod / Math.max(1, stats.totalOrders)) * 100)}%`,
                   }}
-                  className="h-full bg-gradient-to-r from-amber-500 to-amber-300 rounded-full"
+                  className="h-full bg-amber-500 rounded-full"
                 />
               </div>
             </div>
 
             {/* UPI */}
             <div className="space-y-1.5">
-              <div className="flex justify-between text-xs font-semibold">
-                <span className="text-white flex items-center gap-2">
-                  <span className="w-2.5 h-2.5 rounded-full bg-[#E83D4D] shadow-[0_0_8px_rgba(232,61,77,0.8)]" />
-                  Direct UPI / QR
+              <div className="flex items-center justify-between text-xs font-semibold">
+                <span className="flex items-center gap-1.5 text-[#0A0A0A]">
+                  <span className="w-2 h-2 rounded-full bg-[#0A0A0A]" /> Direct UPI / QR
                 </span>
-                <span className="font-mono text-neutral-300">{stats.paymentSplit.upi} orders</span>
+                <span className="font-mono text-[#64748B]">{stats.paymentSplit.upi} orders</span>
               </div>
-              <div className="w-full h-2 rounded-full bg-black/60 overflow-hidden">
+              <div className="w-full h-3 rounded-full neu-inset overflow-hidden p-0.5 border border-white/40">
                 <div
                   style={{
                     width: `${Math.round((stats.paymentSplit.upi / Math.max(1, stats.totalOrders)) * 100)}%`,
                   }}
-                  className="h-full bg-gradient-to-r from-[#801414] via-[#B91C1C] to-[#E83D4D] rounded-full"
+                  className="h-full bg-[#0A0A0A] rounded-full"
                 />
               </div>
             </div>
 
             {/* Cards */}
             <div className="space-y-1.5">
-              <div className="flex justify-between text-xs font-semibold">
-                <span className="text-white flex items-center gap-2">
-                  <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.8)]" />
-                  Credit / Debit Cards
+              <div className="flex items-center justify-between text-xs font-semibold">
+                <span className="flex items-center gap-1.5 text-[#0A0A0A]">
+                  <span className="w-2 h-2 rounded-full bg-emerald-500" /> Credit / Debit Cards
                 </span>
-                <span className="font-mono text-neutral-300">{stats.paymentSplit.card} orders</span>
+                <span className="font-mono text-[#64748B]">{stats.paymentSplit.card} orders</span>
               </div>
-              <div className="w-full h-2 rounded-full bg-black/60 overflow-hidden">
+              <div className="w-full h-3 rounded-full neu-inset overflow-hidden p-0.5 border border-white/40">
                 <div
                   style={{
                     width: `${Math.round((stats.paymentSplit.card / Math.max(1, stats.totalOrders)) * 100)}%`,
                   }}
-                  className="h-full bg-gradient-to-r from-amber-500 to-amber-400 rounded-full"
+                  className="h-full bg-emerald-500 rounded-full"
                 />
               </div>
             </div>
           </div>
 
-          <div className="p-3.5 rounded-xl bg-[#801414]/15 border border-[#801414]/30 text-xs text-neutral-300 flex items-center gap-3">
-            <CheckCircle2 className="w-4 h-4 text-[#FFA4A4] shrink-0" />
-            <span>Pincode 276306 & All Tier 1-3 COD enabled via BlueDart.</span>
+          <div className="p-4 rounded-2xl neu-inset border border-white/50 text-xs text-[#0A0A0A] flex items-center gap-3">
+            <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
+            <span className="font-medium">Pincode 276306 & All Tier 1-3 COD enabled via BlueDart.</span>
           </div>
         </div>
       </div>
 
       {/* 4. Recent Orders Fulfillment Table */}
-      <div className="p-6 sm:p-7 rounded-3xl bg-[#140D0F]/90 backdrop-blur-xl border border-[#801414]/30 shadow-2xl space-y-5">
+      <div className="neu-flat rounded-3xl p-6 sm:p-7 border border-white/80 space-y-5">
         <div className="flex items-center justify-between">
           <div>
-            <h4 className="text-lg font-black font-poppins uppercase tracking-tight text-white">
+            <h4 className="text-lg font-black font-poppins uppercase tracking-tight text-[#0A0A0A]">
               Recent Atelier Orders
             </h4>
-            <p className="text-xs text-neutral-400">
+            <p className="text-xs text-[#64748B]">
               Real-time customer dispatch and tracking AWB status.
             </p>
           </div>
 
           <Link
             href="/admin/orders"
-            className="text-xs font-bold uppercase tracking-wider text-[#FFA4A4] hover:text-white flex items-center gap-1 transition-colors"
+            className="neu-btn px-3.5 py-1.5 rounded-2xl text-xs font-bold uppercase tracking-wider text-[#0A0A0A] hover:text-black flex items-center gap-1.5 border border-white/80 transition-all"
           >
             <span>View All ({orders.length})</span>
-            <ArrowUpRight className="w-4 h-4" />
+            <ArrowUpRight className="w-3.5 h-3.5" />
           </Link>
         </div>
 
@@ -356,64 +347,64 @@ export default function AdminDashboardPage() {
         <div className="overflow-x-auto no-scrollbar -mx-6 px-6">
           <table className="w-full text-left text-xs">
             <thead>
-              <tr className="border-b border-[#801414]/20 text-[10px] font-mono font-bold uppercase tracking-wider text-[#A87178]">
-                <th className="pb-3">Order ID</th>
-                <th className="pb-3">Customer</th>
-                <th className="pb-3">Items</th>
-                <th className="pb-3">Amount</th>
-                <th className="pb-3">Payment</th>
-                <th className="pb-3">Status</th>
-                <th className="pb-3">Carrier / AWB</th>
-                <th className="pb-3 text-right">Action</th>
+              <tr className="border-b border-[#E2E8F0] text-[10px] font-mono font-bold uppercase tracking-wider text-[#64748B]">
+                <th className="pb-3 px-3">Order ID</th>
+                <th className="pb-3 px-3">Customer</th>
+                <th className="pb-3 px-3">Items</th>
+                <th className="pb-3 px-3">Amount</th>
+                <th className="pb-3 px-3">Payment</th>
+                <th className="pb-3 px-3">Status</th>
+                <th className="pb-3 px-3">Carrier / AWB</th>
+                <th className="pb-3 px-3 text-right">Action</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-white/5 font-medium">
+            <tbody className="divide-y divide-[#E2E8F0]/60 font-medium">
               {orders.slice(0, 5).map((ord) => (
-                <tr key={ord.id} className="hover:bg-[#801414]/10 transition-colors">
-                  <td className="py-3.5 font-mono text-[#FFA4A4] font-bold">
+                <tr key={ord.id} className="hover:bg-white/50 transition-colors">
+                  <td className="py-3.5 px-3 font-mono text-[#0A0A0A] font-bold">
                     {ord.orderNumber}
                   </td>
-                  <td className="py-3.5">
-                    <p className="font-bold text-white">{ord.customerName}</p>
-                    <p className="text-[11px] text-neutral-400 font-mono">{ord.city}, {ord.pincode}</p>
+                  <td className="py-3.5 px-3">
+                    <p className="font-bold text-[#0A0A0A]">{ord.customerName}</p>
+                    <p className="text-[11px] text-[#64748B] font-mono">{ord.city}, {ord.pincode}</p>
                   </td>
-                  <td className="py-3.5 text-neutral-300">
+                  <td className="py-3.5 px-3 text-[#475569]">
                     {ord.items.length} {ord.items.length === 1 ? 'garment' : 'garments'}
                   </td>
-                  <td className="py-3.5 font-mono font-bold text-white">
+                  <td className="py-3.5 px-3 font-mono font-bold text-[#0A0A0A]">
                     ₹{ord.totalAmount.toLocaleString('en-IN')}
                   </td>
-                  <td className="py-3.5">
-                    <span className="px-2 py-0.5 rounded text-[10px] font-mono font-bold uppercase bg-black/60 text-neutral-300 border border-[#801414]/30">
+                  <td className="py-3.5 px-3">
+                    <span className="px-2.5 py-1 rounded-xl text-[10px] font-mono font-bold uppercase neu-flat-sm text-[#0A0A0A] border border-white/80">
                       {ord.paymentMethod}
                     </span>
                   </td>
-                  <td className="py-3.5">
+                  <td className="py-3.5 px-3">
                     <span
                       className={`px-2.5 py-1 rounded-full text-[10px] font-mono font-bold uppercase border ${
                         ord.orderStatus === 'Delivered'
-                          ? 'bg-emerald-500/15 text-emerald-300 border-emerald-500/30'
+                          ? 'bg-emerald-100 text-emerald-800 border-emerald-300'
                           : ord.orderStatus === 'Shipped'
-                          ? 'bg-gradient-to-r from-[#801414]/40 to-[#B91C1C]/40 text-[#FFA4A4] border-[#801414]/60'
+                          ? 'bg-[#0A0A0A] text-white border-black'
                           : ord.orderStatus === 'Confirmed'
-                          ? 'bg-blue-500/15 text-blue-300 border-blue-500/30'
-                          : 'bg-amber-500/15 text-amber-300 border-amber-500/30'
+                          ? 'bg-blue-100 text-blue-800 border-blue-300'
+                          : 'bg-amber-100 text-amber-800 border-amber-300'
                       }`}
                     >
                       {ord.orderStatus}
                     </span>
                   </td>
-                  <td className="py-3.5 font-mono text-[11px] text-neutral-400">
+                  <td className="py-3.5 px-3 font-mono text-[11px] text-[#475569]">
                     {ord.trackingNumber ? (
-                      <span className="text-[#FFA4A4]">{ord.trackingNumber}</span>
+                      <span className="text-[#0A0A0A] font-bold">{ord.trackingNumber}</span>
                     ) : (
-                      <span className="text-neutral-500">Unassigned</span>
+                      <span className="text-[#94A3B8]">Unassigned</span>
                     )}
                   </td>
-                  <td className="py-3.5 text-right">
+                  <td className="py-3.5 px-3 text-right">
                     <Link
                       href="/admin/orders"
-                      className="px-3 py-1 rounded-lg bg-gradient-to-r from-[#801414]/40 to-[#991B1B]/40 hover:from-[#801414] hover:to-[#B91C1C] text-white text-[11px] font-bold uppercase transition-all border border-[#801414]/40"
+                      className="px-3.5 py-1.5 rounded-xl neu-btn hover:neu-btn-dark hover:text-white text-[#0A0A0A] text-[11px] font-bold uppercase transition-all border border-white/80 inline-block"
                     >
                       Manage
                     </Link>

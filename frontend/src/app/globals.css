@@ -60,6 +60,62 @@ h1, h2, h3, h4, h5, h6 {
   animation: fadeIn 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
+/* Neumorphism (Soft UI) Utilities for White & Black Theme */
+.neu-flat {
+  background: #F0F3F8;
+  box-shadow: 6px 6px 14px #d1d9e6, -6px -6px 14px #ffffff;
+}
+
+.neu-flat-sm {
+  background: #F0F3F8;
+  box-shadow: 3px 3px 8px #d1d9e6, -3px -3px 8px #ffffff;
+}
+
+.neu-flat-lg {
+  background: #F0F3F8;
+  box-shadow: 10px 10px 24px #cbd5e1, -10px -10px 24px #ffffff;
+}
+
+.neu-inset {
+  background: #F0F3F8;
+  box-shadow: inset 3px 3px 6px #d1d9e6, inset -3px -3px 6px #ffffff;
+}
+
+.neu-pressed {
+  background: #e6ecf4;
+  box-shadow: inset 4px 4px 8px #c8d3e2, inset -4px -4px 8px #ffffff;
+}
+
+.neu-btn {
+  background: #F0F3F8;
+  box-shadow: 5px 5px 12px #d1d9e6, -5px -5px 12px #ffffff;
+  transition: all 0.2s ease;
+}
+
+.neu-btn:hover {
+  box-shadow: 3px 3px 6px #d1d9e6, -3px -3px 6px #ffffff;
+  transform: translateY(1px);
+}
+
+.neu-btn:active {
+  box-shadow: inset 3px 3px 6px #d1d9e6, inset -3px -3px 6px #ffffff;
+  transform: translateY(2px);
+}
+
+.neu-btn-dark {
+  background: #0a0a0a;
+  color: #ffffff;
+  box-shadow: 4px 4px 12px rgba(10, 10, 10, 0.22), -2px -2px 8px rgba(255, 255, 255, 0.9);
+  transition: all 0.2s ease;
+}
+
+.neu-btn-dark:hover {
+  background: #000000;
+  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.35);
+  transform: translateY(1px);
+}
+
+
 .animate-slide-up {
   animation: slideUp 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
